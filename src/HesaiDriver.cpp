@@ -1,0 +1,256 @@
+// Implementation of HesaiDriver methods
+
+#include "logs_redirection.cpp"
+#include "HesaiDriver.hpp"
+#include "core.hpp"
+
+
+HesaiLidarSdk<LidarPointXYZICRT> hesai_sdk_;
+volatile int HesaiDriver::sigint_received_ = 0;
+
+HesaiDriver::HesaiDriver(){}
+HesaiDriver::~HesaiDriver() { /* cleanup in close() */ }
+
+void HesaiDriver::_sigintHandler(int)
+{
+    sigint_received_ = 1;
+}
+
+bool HesaiDriver::init(
+    int lidar_type, 
+    const std::string& lidar_address, 
+    const std::string& host_address, 
+    int scans_port, 
+    int ptc_port, 
+    int fault_message_port, 
+    const std::string& logging_dir,
+    const std::string& log_server_ip,
+    int log_server_port
+) {
+        // setup loggers
+        if (log_server_port != 0 && log_server_ip != "") {
+            redirect_logs_to_udp_ = true;
+            // Create UDP buffer as member variable to maintain lifetime
+            udp_buf_ = std::make_unique<UdpStreamBuf>(log_server_ip, log_server_port);
+            tee_buf_ = std::make_unique<TeeStreamBuf>(std::cout.rdbuf(), udp_buf_.get());
+            old_cout_buf_ = std::cout.rdbuf(tee_buf_.get());
+            std::cout << "C++: Logging initialized. Redirecting logs to UDP " << log_server_ip << ":" << log_server_port << std::endl;
+        }
+
+    // Process exit flag
+    exit_process_cmd_ = false;
+    std::signal(SIGINT, &HesaiDriver::_sigintHandler);
+    
+    // Save parameters
+    lidar_type_ = lidar_type;
+    logging_dir_ = logging_dir;
+    snapshot_dir_ = "";
+    lidar_address_ = lidar_address; // <--- fixed: assign host_address parameter
+    host_address_ = host_address; // <--- fixed: assign host_address parameter
+    ptc_port_ = ptc_port;
+    scans_port_ = scans_port;
+    fault_message_port_ = fault_message_port;
+
+    current_lidar_status_ = LidarStatus();
+
+    DriverParam param;
+    param.input_param.source_type = DATA_FROM_LIDAR;
+    param.input_param.device_ip_address = host_address_;  // lidar ip
+    param.input_param.ptc_port = 9347; // lidar ptc port
+    param.input_param.udp_port = 2368; // point cloud destination port
+    param.input_param.multicast_ip_address = "";
+
+    param.input_param.ptc_mode = PtcMode::tcp;
+    param.input_param.use_ptc_connected = false;  // true: use PTC connected, false: recv correction from local file
+    param.input_param.correction_file_path = "C:\\Users\\lough\\OneDrive - BenjaminMuylDesign\\BMDxPixel\\dev\\JT128\\JT128_default_angle.csv";
+    param.input_param.firetimes_path = "Your firetime file path";
+
+    param.input_param.host_ip_address = host_address_; // point cloud destination ip, local ip
+    param.input_param.fault_message_port = 0; // fault message destination port, 0: not use
+    // PtcMode::tcp_ssl use
+    param.input_param.certFile = "";
+    param.input_param.privateKeyFile = "";
+    param.input_param.caFile = "";
+
+    param.input_param.recv_point_cloud_timeout = 2.0; // seconds
+
+    // param.input_param.source_type = DATA_FROM_PCAP;
+    // param.input_param.pcap_path = "E:/aeroViz/dev/2026-04-14-ReplayHesaiPCAP/1776201541.pcap";
+    // param.input_param.correction_file_path = "C:\\Users\\lough\\OneDrive - BenjaminMuylDesign\\BMDxPixel\\dev\\JT128\\JT128_default_angle.csv";
+
+    // param.decoder_param.pcap_play_synchronization = true;
+    // param.decoder_param.play_rate_ = 1.0;
+    // param.decoder_param.pcap_play_in_loop = true; // pcap playback
+
+    param.decoder_param.enable_packet_loss_tool = false;
+    param.decoder_param.socket_buffer_size = 262144000;
+    
+    Logger::GetInstance().bindLogCallback(
+        [](LOGLEVEL level, const char* file, int line, const char* func, char* msg) {
+            const char* lvl = "INFO";
+            if (level & HESAI_LOG_DEBUG) lvl = "DEBUG";
+            else if (level & HESAI_LOG_WARNING) lvl = "WARNING";
+            else if (level & HESAI_LOG_ERROR) lvl = "ERROR";
+            else if (level & HESAI_LOG_FATAL) lvl = "FATAL";
+
+            // Goes through your TeeStreamBuf -> UDP
+            std::cout << "[HESAI][" << lvl << "] "
+                    << msg << std::endl;
+        }
+    );
+
+    if (!hesai_sdk_.Init(param)) {
+        std::cout << "C++: Driver Initialize Error..." << std::endl;
+        return false;
+    };
+    
+    hesai_sdk_.RegRecvCallback(faultMessageCallback);
+    hesai_sdk_.RegRecvCallback(lidarCallback);
+    hesai_sdk_.RegRecvCallback(
+        [dir = std::ref(logging_dir_), snapdir = std::ref(snapshot_dir_)](const UdpFrame_t& udp_packets, double timestamp) {
+            rawPacketCallback(udp_packets, timestamp, dir, snapdir);
+         }
+    );
+
+    // Create driver
+    // rsdriver_ = std::make_unique<LidarDriver<PointCloudT<PointXYZI>>>();
+
+    // Register callbacks (using static or free functions for now)
+    // rsdriver_->regPointCloudCallback(
+    //     driverGetPointCloudFromCallerCallback,
+    //     driverReturnPointCloudToCallerCallback
+    // );
+    // rsdriver_->regExceptionCallback([](const Error& code) {
+    //     RS_WARNING << code.toString() << std::endl;
+    // });
+    // rsdriver_->regPacketCallback(
+    //     [dir = logging_dir_, snapdir = std::ref(snapshot_dir_)](const robosense::lidar::Packet& pkt) {
+    //         logLidarPacket(pkt, dir, snapdir);
+    // });
+
+    return true;
+}
+
+bool HesaiDriver::start() {
+    hesai_sdk_.Start();  // waits until ready or fail
+    if (hesai_sdk_.lidar_ptr_ && hesai_sdk_.lidar_ptr_->GetInitFinish(FailInit)) {
+        std::cout << "C++: Hesai Driver start failed (init timeout or init error)." << std::endl;
+        hesai_sdk_.Stop();  // same idea as sample.Stop() in test
+        return false;
+    }
+
+    std::cout << "C++: Hesai Driver started successfully!" << std::endl;
+    return true;
+
+    // periodic_status_thread_ = std::thread(&HesaiDriver::periodicStatusThread, this);
+
+    // bool startedOK = rsdriver_->start();
+    // if (!startedOK) {
+    //     RS_ERROR << "C++: Driver Start Error..." << std::endl;
+    //     return false;
+    // }
+
+    // Dedicated SIGINT monitoring thread
+    // sig_monitor_thread_ = std::thread([this]() {
+    //     while (!exit_process_cmd_) {
+    //         if (sigint_received_) {
+    //             exit_process_cmd_.store(true);
+    //             break;
+    //         }
+    //         std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    //     }
+    // });
+    // std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    // Try to get latest frame, to ensure lidar is properly connected
+    // double* dummy_buf = new double[900*96*4]; // Adjust size as needed
+    // PointCloudFetchResult result = returnLatestCloud(dummy_buf);
+    // bool frameOK = result.success;
+
+    // if (frameOK) {
+    //     std::cout << "C++: Driver & Threads successfully started !" << std::endl;
+    // }
+}
+
+PointCloudFetchResult HesaiDriver::getLatestFrame(double* out_buf) {
+    PointCloudFetchResult result = returnLatestCloud(out_buf);
+    return result;
+}
+
+// Return the LidarStatus object so the wrapper can handle conversion to Python.
+LidarStatus HesaiDriver::getStatus() const {
+    return current_lidar_status_;
+}
+
+void HesaiDriver::updateSnapshotDirectory(const std::string& snapshot_dir) {
+    snapshot_dir_ = snapshot_dir;
+    // std::cout << "C++: Updated snapshot directory to: " << snapshot_dir_ << std::endl;
+}
+
+bool HesaiDriver::periodicStatusThread() {
+    // while (!exit_process_cmd_) {
+    //     float temp;
+    //     DeviceInfo info;
+    //     DeviceStatus status;
+    //     bool temp_ok = rsdriver_->getTemperature(temp);
+    //     bool info_ok = rsdriver_->getDeviceInfo(info);
+    //     bool status_ok = rsdriver_->getDeviceStatus(status);
+
+    //     if (temp_ok) {
+    //         current_lidar_status_.temperature = temp;
+    //     }
+    //     if (info_ok && info.state){
+    //         std::string sn_str;
+    //         for (size_t i = 0; i < sizeof(info.sn); ++i) {
+    //             char buf[3];
+    //             std::sprintf(buf, "%02X", info.sn[i]);
+    //             sn_str += buf;
+    //         }
+    //         std::string mac_str;
+    //         for (size_t i = 0; i < sizeof(info.mac); ++i) {
+    //             char buf[3];
+    //             std::sprintf(buf, "%02X", info.mac[i]);
+    //             mac_str += buf;
+    //             if (i < sizeof(info.mac) - 1) mac_str += ":";
+    //         }
+    //         std::string top_fw_ver_str;
+    //         for (size_t i = 0; i < sizeof(info.top_ver); ++i) {
+    //             char buf[3];
+    //             std::sprintf(buf, "%02X", static_cast<unsigned int>(info.top_ver[i]));
+    //             top_fw_ver_str += buf;
+    //         }
+    //         std::string bottom_fw_ver_str;
+    //         for (size_t i = 0; i < sizeof(info.bottom_ver); ++i) {
+    //             char buf[3];
+    //             std::sprintf(buf, "%02X", static_cast<unsigned int>(info.bottom_ver[i]));
+    //             bottom_fw_ver_str += buf;
+    //         }
+    //         current_lidar_status_.sn = sn_str;
+    //         current_lidar_status_.mac = mac_str;
+    //         current_lidar_status_.top_fw_ver = top_fw_ver_str;
+    //         current_lidar_status_.bottom_fw_ver = bottom_fw_ver_str;
+    //     }
+    //     if (status_ok && status.state){
+    //         current_lidar_status_.voltage = status.voltage/100; // make V not cV
+    //     }
+    //     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    // }
+    return true;
+}
+
+void HesaiDriver::close() {
+    
+    exit_process_cmd_.store(true);
+
+    // rsdriver_->stop();
+
+    if (logging_dir_ != "" && pcap_thread_.joinable()) pcap_thread_.join();
+    if (periodic_status_thread_.joinable()) periodic_status_thread_.join();
+    if (sig_monitor_thread_.joinable()) sig_monitor_thread_.join();
+
+    // std::cout << "C++: KeyboardInterrupt: Stopping processes and drivers..." << std::endl;
+    
+    // if (redirect_logs_to_udp_) {
+    //     std::cout.rdbuf(old_cout_buf_);
+    // }
+}
