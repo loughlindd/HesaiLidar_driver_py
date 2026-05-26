@@ -1,6 +1,7 @@
 // RobosenseDriver.hpp
 // C++ class wrapper for RoboSense point cloud driver logic
 // This is a skeleton based on suggestions, not yet integrated with existing code
+#define WIN32_LEAN_AND_MEAN
 
 #include <string>
 #include <thread>
@@ -8,6 +9,8 @@
 #include <memory>
 #include <csignal>
 #include <windows.h>
+
+#include "hesai_lidar_sdk.hpp"
 
 // Forward declarations for stream buffer classes from logs_redirection.cpp
 class UdpStreamBuf;
@@ -79,6 +82,9 @@ private:
 
     // Status to store latest readings
     LidarStatus current_lidar_status_;
+
+    // Recreated on each init() so Stop()->Init()->Start() always gets a clean object
+    std::unique_ptr<HesaiLidarSdk<LidarPointXYZICRT>> hesai_sdk_;
 
     // Driver and resources
     // std::unique_ptr<LidarDriver<PointCloudT<PointXYZI>>> rsdriver_;

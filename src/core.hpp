@@ -9,7 +9,7 @@
 #include <chrono>
 
 // Global variables defined in the .cpp file
-extern uint32_t last_frame_time;
+extern uint64_t last_frame_time;
 extern uint32_t cur_frame_time;
 extern bool running;
 extern int kMaxTimeInterval;

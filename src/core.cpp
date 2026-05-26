@@ -12,7 +12,7 @@
 // #define EXTERNAL_INPUT_PARSER_TEST
 // #define LIDAR_PARSER_TCP_TEST
 
-uint32_t last_frame_time = 0;
+uint64_t last_frame_time = 0;
 uint32_t cur_frame_time = 0;
 bool running = true;
 int kMaxTimeInterval = 250000;
@@ -152,7 +152,8 @@ void WritePcapPacket(std::ofstream& f, const hesai::lidar::UdpPacket& pkt,
 //log info, display frame message
 void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {  
   auto t0 = std::chrono::system_clock::now();
-  
+  last_frame_time = nowtUTC();
+
   // Copy point cloud data to output buffer
   size_t num_points = frame.points_num;
   for (size_t i = 0; i < num_points; ++i) {

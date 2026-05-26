@@ -1,11 +1,11 @@
 // Implementation of HesaiDriver methods
 
+#include <winsock2.h>
 #include "logs_redirection.cpp"
 #include "HesaiDriver.hpp"
 #include "core.hpp"
 
 
-HesaiLidarSdk<LidarPointXYZICRT> hesai_sdk_;
 volatile int HesaiDriver::sigint_received_ = 0;
 
 HesaiDriver::HesaiDriver(){}
@@ -37,6 +37,14 @@ bool HesaiDriver::init(
             std::cout << "C++: Logging initialized. Redirecting logs to UDP " << log_server_ip << ":" << log_server_port << std::endl;
         }
 
+    // Reset global frame state so stale timestamps from a previous session don't
+    // trigger the connection-loss path in getLatestFrame before any frame arrives.
+    last_frame_time = 0;
+
+    // Recreate the SDK object so Init()->Start() always starts from a clean state,
+    // even after a previous Stop() call on the same driver instance.
+    hesai_sdk_ = std::make_unique<HesaiLidarSdk<LidarPointXYZICRT>>();
+
     // Process exit flag
     exit_process_cmd_ = false;
     std::signal(SIGINT, &HesaiDriver::_sigintHandler);
@@ -55,9 +63,9 @@ bool HesaiDriver::init(
 
     DriverParam param;
     param.input_param.source_type = DATA_FROM_LIDAR;
-    param.input_param.device_ip_address = host_address_;  // lidar ip
-    param.input_param.ptc_port = 9347; // lidar ptc port
-    param.input_param.udp_port = 2368; // point cloud destination port
+    param.input_param.device_ip_address = lidar_address_;  // lidar ip
+    param.input_param.ptc_port = static_cast<uint16_t>(ptc_port_); // lidar ptc port
+    param.input_param.udp_port = static_cast<uint16_t>(scans_port_); // point cloud destination port
     param.input_param.multicast_ip_address = "";
 
     param.input_param.ptc_mode = PtcMode::tcp;
@@ -66,13 +74,14 @@ bool HesaiDriver::init(
     param.input_param.firetimes_path = "Your firetime file path";
 
     param.input_param.host_ip_address = host_address_; // point cloud destination ip, local ip
-    param.input_param.fault_message_port = 0; // fault message destination port, 0: not use
+    param.input_param.fault_message_port = static_cast<uint16_t>(fault_message_port_); // fault message destination port
     // PtcMode::tcp_ssl use
     param.input_param.certFile = "";
     param.input_param.privateKeyFile = "";
     param.input_param.caFile = "";
 
-    param.input_param.recv_point_cloud_timeout = 2.0; // seconds
+    param.input_param.recv_point_cloud_timeout = 0.5; // seconds
+    param.input_param.ptc_connect_timeout = 0.5; // seconds
 
     // param.input_param.source_type = DATA_FROM_PCAP;
     // param.input_param.pcap_path = "E:/aeroViz/dev/2026-04-14-ReplayHesaiPCAP/1776201541.pcap";
@@ -99,18 +108,21 @@ bool HesaiDriver::init(
         }
     );
 
-    if (!hesai_sdk_.Init(param)) {
+    std::cout << "C++: Calling Hesai SDK Init (async init thread)..." << std::endl;
+    if (!hesai_sdk_->Init(param)) {
         std::cout << "C++: Driver Initialize Error..." << std::endl;
         return false;
-    };
-    
-    hesai_sdk_.RegRecvCallback(faultMessageCallback);
-    hesai_sdk_.RegRecvCallback(lidarCallback);
-    hesai_sdk_.RegRecvCallback(
+    }
+    std::cout << "C++: Hesai SDK Init returned." << std::endl;
+
+    hesai_sdk_->RegRecvCallback(faultMessageCallback);
+    hesai_sdk_->RegRecvCallback(lidarCallback);
+    hesai_sdk_->RegRecvCallback(
         [dir = std::ref(logging_dir_), snapdir = std::ref(snapshot_dir_)](const UdpFrame_t& udp_packets, double timestamp) {
             rawPacketCallback(udp_packets, timestamp, dir, snapdir);
          }
     );
+    std::cout << "C++: Hesai callbacks registered." << std::endl;
 
     // Create driver
     // rsdriver_ = std::make_unique<LidarDriver<PointCloudT<PointXYZI>>>();
@@ -132,10 +144,10 @@ bool HesaiDriver::init(
 }
 
 bool HesaiDriver::start() {
-    hesai_sdk_.Start();  // waits until ready or fail
-    if (hesai_sdk_.lidar_ptr_ && hesai_sdk_.lidar_ptr_->GetInitFinish(FailInit)) {
+    hesai_sdk_->Start();  // waits until ready or fail
+    if (hesai_sdk_->lidar_ptr_ && hesai_sdk_->lidar_ptr_->GetInitFinish(FailInit)) {
         std::cout << "C++: Hesai Driver start failed (init timeout or init error)." << std::endl;
-        hesai_sdk_.Stop();  // same idea as sample.Stop() in test
+        hesai_sdk_->Stop();
         return false;
     }
 
@@ -173,6 +185,10 @@ bool HesaiDriver::start() {
 }
 
 PointCloudFetchResult HesaiDriver::getLatestFrame(double* out_buf) {
+    uint64_t now = nowtUTC();
+    if (last_frame_time != 0 && now - last_frame_time > 5) {
+        return {false, 0.0f, 0.0f, 0.0f};
+    }
     PointCloudFetchResult result = returnLatestCloud(out_buf);
     return result;
 }
@@ -239,8 +255,9 @@ bool HesaiDriver::periodicStatusThread() {
 }
 
 void HesaiDriver::close() {
-    
+    if (hesai_sdk_) hesai_sdk_->Stop();
     exit_process_cmd_.store(true);
+    
 
     // rsdriver_->stop();
 
