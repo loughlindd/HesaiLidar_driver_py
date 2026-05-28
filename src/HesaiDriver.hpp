@@ -54,7 +54,9 @@ public:
       int fault_message_port, 
       const std::string& logging_dir, 
       const std::string& log_server_ip, 
-      int log_server_port);
+      int log_server_port,
+      const std::string& correctionData
+    );
     bool start();
     PointCloudFetchResult getLatestFrame(double* out_buf);
     bool periodicStatusThread();

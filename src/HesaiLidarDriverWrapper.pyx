@@ -36,7 +36,8 @@ cdef extern from "HesaiDriver.hpp":
                   int fault_message_port,
                   string logging_dir,
                   string log_server_ip,
-                  int log_server_port
+                  int log_server_port,
+                  string correction_data
                   ) except +
         bint start()
         LidarStatus getStatus() const
@@ -66,7 +67,8 @@ cdef class PyHesaiDriver:
         int fault_message_port,
         logging_dir,
         log_server_ip,
-        int log_server_port
+        int log_server_port,
+        correction_data
     ):
         if self.cpp_driver is NULL:
             self.cpp_driver = new HesaiDriver()
@@ -75,7 +77,8 @@ cdef class PyHesaiDriver:
         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
-        return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp)
+        cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
+        return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp)
 
     def start(self):
         return self.cpp_driver.start()

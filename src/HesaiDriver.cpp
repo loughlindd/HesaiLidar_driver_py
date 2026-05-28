@@ -25,7 +25,8 @@ bool HesaiDriver::init(
     int fault_message_port, 
     const std::string& logging_dir,
     const std::string& log_server_ip,
-    int log_server_port
+    int log_server_port,
+    const std::string& correctionData
 ) {
     // Ensure no stale resources from a prior session remain bound.
     close();
@@ -82,7 +83,7 @@ bool HesaiDriver::init(
 
     param.input_param.ptc_mode = PtcMode::tcp;
     param.input_param.use_ptc_connected = false;  // true: use PTC connected, false: recv correction from local file
-    param.input_param.correction_file_path = "C:\\Users\\lough\\OneDrive - BenjaminMuylDesign\\BMDxPixel\\dev\\JT128\\JT128_default_angle.csv";
+    param.input_param.correction_file_path = correctionData;
     param.input_param.firetimes_path = "Your firetime file path";
 
     param.input_param.host_ip_address = host_address_; // point cloud destination ip, local ip
@@ -126,6 +127,14 @@ bool HesaiDriver::init(
         return false;
     }
     std::cout << "C++: Hesai SDK Init returned." << std::endl;
+
+    // int rc = hesai_sdk_->lidar_ptr_->LoadCorrectionString(correctionData.data(),
+    //                                           static_cast<int>(correctionData.size()));
+    // if (rc != 0) {
+    //     std::cout << "C++: Correction data load failed..." << std::endl;
+    //     return false;
+    // }
+    // std::cout << "C++: Correction data loaded successfully." << std::endl;
 
     hesai_sdk_->RegRecvCallback(faultMessageCallback);
     hesai_sdk_->RegRecvCallback(lidarCallback);
