@@ -9,6 +9,7 @@
 #include <memory>
 #include <csignal>
 #include <windows.h>
+#include <iostream>
 
 #include "hesai_lidar_sdk.hpp"
 
@@ -76,7 +77,7 @@ private:
     int log_server_port_;
 
     bool redirect_logs_to_udp_ = false;
-    std::streambuf* old_cout_buf_; // To restore original cout buffer if redirecting logs
+    std::streambuf* old_cout_buf_ = nullptr; // To restore original cout buffer if redirecting logs
     std::unique_ptr<UdpStreamBuf> udp_buf_; // UDP stream buffer for log redirection
     std::unique_ptr<TeeStreamBuf> tee_buf_;  // Tee stream buffer to split output to console and UDP
 
@@ -94,6 +95,9 @@ private:
 
     // Sigint handling
     std::atomic<bool> exit_process_cmd_;
+    using SignalHandler = void(*)(int);
+    SignalHandler prev_sigint_handler_ = nullptr;
+    bool signal_handler_installed_ = false;
     static volatile std::sig_atomic_t sigint_received_;
     static void HesaiDriver::_sigintHandler(int);
 

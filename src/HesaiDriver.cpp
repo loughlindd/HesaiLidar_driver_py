@@ -9,7 +9,7 @@
 volatile int HesaiDriver::sigint_received_ = 0;
 
 HesaiDriver::HesaiDriver(){}
-HesaiDriver::~HesaiDriver() { /* cleanup in close() */ }
+HesaiDriver::~HesaiDriver() { close(); }
 
 void HesaiDriver::_sigintHandler(int)
 {
@@ -27,6 +27,9 @@ bool HesaiDriver::init(
     const std::string& log_server_ip,
     int log_server_port
 ) {
+    // Ensure no stale resources from a prior session remain bound.
+    close();
+
         // setup loggers
         if (log_server_port != 0 && log_server_ip != "") {
             redirect_logs_to_udp_ = true;
@@ -41,13 +44,22 @@ bool HesaiDriver::init(
     // trigger the connection-loss path in getLatestFrame before any frame arrives.
     last_frame_time = 0;
 
-    // Recreate the SDK object so Init()->Start() always starts from a clean state,
-    // even after a previous Stop() call on the same driver instance.
+    // Stop and destroy the previous SDK instance before creating a fresh one.
+    // The sleep gives the SDK's internal receive threads time to fully terminate
+    // and the OS time to release the UDP port. Without this, a zombie receive
+    // thread from the prior session can intercept incoming packets, causing the
+    // new Start() to block indefinitely waiting for data that never arrives.
+    if (hesai_sdk_) {
+        hesai_sdk_->Stop();
+        hesai_sdk_.reset();
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     hesai_sdk_ = std::make_unique<HesaiLidarSdk<LidarPointXYZICRT>>();
 
     // Process exit flag
     exit_process_cmd_ = false;
-    std::signal(SIGINT, &HesaiDriver::_sigintHandler);
+    prev_sigint_handler_ = std::signal(SIGINT, &HesaiDriver::_sigintHandler);
+    signal_handler_installed_ = true;
     
     // Save parameters
     lidar_type_ = lidar_type;
@@ -147,8 +159,7 @@ bool HesaiDriver::start() {
     hesai_sdk_->Start();  // waits until ready or fail
     if (hesai_sdk_->lidar_ptr_ && hesai_sdk_->lidar_ptr_->GetInitFinish(FailInit)) {
         std::cout << "C++: Hesai Driver start failed (init timeout or init error)." << std::endl;
-        hesai_sdk_->Stop();
-        return false;
+        return false; // teardown handled by next init() via make_unique reset
     }
 
     std::cout << "C++: Hesai Driver started successfully!" << std::endl;
@@ -255,19 +266,33 @@ bool HesaiDriver::periodicStatusThread() {
 }
 
 void HesaiDriver::close() {
-    if (hesai_sdk_) hesai_sdk_->Stop();
+    // Idempotent shutdown: safe if called multiple times from Python and dtor.
+    if (hesai_sdk_) {
+        hesai_sdk_->Stop();
+        hesai_sdk_.reset(); // null so a subsequent init() doesn't double-stop
+    }
     exit_process_cmd_.store(true);
     
 
     // rsdriver_->stop();
 
-    if (logging_dir_ != "" && pcap_thread_.joinable()) pcap_thread_.join();
-    if (periodic_status_thread_.joinable()) periodic_status_thread_.join();
-    if (sig_monitor_thread_.joinable()) sig_monitor_thread_.join();
-
-    // std::cout << "C++: KeyboardInterrupt: Stopping processes and drivers..." << std::endl;
+    if (pcap_thread_.joinable()) pcap_thread_.join();
+    // if (periodic_status_thread_.joinable()) periodic_status_thread_.join();
+    // if (sig_monitor_thread_.joinable()) sig_monitor_thread_.join();
     
-    // if (redirect_logs_to_udp_) {
-    //     std::cout.rdbuf(old_cout_buf_);
-    // }
+    if (redirect_logs_to_udp_ && old_cout_buf_ != nullptr) {
+        std::cout.rdbuf(old_cout_buf_);
+        old_cout_buf_ = nullptr;
+    }
+    tee_buf_.reset();
+    udp_buf_.reset();
+    redirect_logs_to_udp_ = false;
+
+    if (signal_handler_installed_) {
+        std::signal(SIGINT, prev_sigint_handler_);
+        signal_handler_installed_ = false;
+        prev_sigint_handler_ = nullptr;
+    }
+
+    std::cout << "C++: KeyboardInterrupt: Stopping processes and drivers..." << std::endl;
 }

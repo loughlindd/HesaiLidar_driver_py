@@ -54,6 +54,7 @@ cdef class PyHesaiDriver:
         if self.cpp_driver is not NULL:
             self.cpp_driver.close()
             del self.cpp_driver
+            self.cpp_driver = NULL
 
     def init(
         self, 
@@ -67,6 +68,8 @@ cdef class PyHesaiDriver:
         log_server_ip,
         int log_server_port
     ):
+        if self.cpp_driver is NULL:
+            self.cpp_driver = new HesaiDriver()
         cdef string log_dir_cpp = logging_dir.encode('utf-8') if logging_dir is not None else "".encode("utf-8")
         cdef string host_address_cpp = host_address.encode('utf-8')
         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
@@ -118,4 +121,7 @@ cdef class PyHesaiDriver:
                 py_bottom)
 
     def close(self):
-        self.cpp_driver.close()
+        if self.cpp_driver is not NULL:
+            self.cpp_driver.close()
+            del self.cpp_driver
+            self.cpp_driver = NULL
