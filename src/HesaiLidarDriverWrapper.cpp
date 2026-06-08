@@ -2983,7 +2983,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__p
 /* Module declarations from "HesaiLidar_driver_wrapper" */
 static std::string __pyx_convert_string_from_py_6libcpp_6string_std__in_string(PyObject *); /*proto*/
 /* #### Code section: typeinfo ### */
-static const __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
+static const __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float32_t = { "float32_t", NULL, sizeof(__pyx_t_5numpy_float32_t), { 0 }, 0, 'R', 0, 0 };
 /* #### Code section: before_global_var ### */
 #define __Pyx_MODULE_NAME "HesaiLidar_driver_wrapper"
 extern int __pyx_module_is_main_HesaiLidar_driver_wrapper;
@@ -3175,7 +3175,7 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_b_ __pyx_string_tab[84]
 #define __pyx_kp_b_iso88591_A_4_3a_oQ_WA_WT_gghhi_7_1_WAQ_WA __pyx_string_tab[85]
 #define __pyx_kp_b_iso88591_A_4_7_6_A_a __pyx_string_tab[86]
-#define __pyx_kp_b_iso88591_A_6a_4s_AQ_S_D_1_vZvZvZvQ __pyx_string_tab[87]
+#define __pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_1_vZvZvZvQ __pyx_string_tab[87]
 #define __pyx_kp_b_iso88591_A_T_Ja_AS_a_Qb_q_AT_q_ar_A_a_ar __pyx_string_tab[88]
 #define __pyx_kp_b_iso88591_A_t_fA __pyx_string_tab[89]
 #define __pyx_kp_b_iso88591_A_wa_PWWaaccjjkkl_K_q __pyx_string_tab[90]
@@ -5712,7 +5712,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_6start(str
  *         return self.cpp_driver.start()
  * 
  *     def getLatestFrame(self, out_arr):             # <<<<<<<<<<<<<<
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
 */
 
@@ -5803,7 +5803,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatestFrame(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_out_arr) {
   PyArrayObject *__pyx_v_arr = 0;
-  double *__pyx_v_ptr;
+  float *__pyx_v_ptr;
   PointCloudFetchResult __pyx_v_result;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_arr;
   __Pyx_Buffer __pyx_pybuffer_arr;
@@ -5830,7 +5830,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   /* "src/HesaiLidarDriverWrapper.pyx":87
  * 
  *     def getLatestFrame(self, out_arr):
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr             # <<<<<<<<<<<<<<
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr             # <<<<<<<<<<<<<<
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")
 */
@@ -5839,7 +5839,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_mstate_global->__pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 87, __pyx_L1_error)
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_arr.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_1), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_arr.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_1), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float32_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_arr = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_arr.rcbuffer->pybuffer.buf = NULL;
       __PYX_ERR(0, 87, __pyx_L1_error)
     } else {__pyx_pybuffernd_arr.diminfo[0].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_arr.diminfo[0].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_arr.diminfo[1].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_arr.diminfo[1].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[1];
@@ -5850,10 +5850,10 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
 
   /* "src/HesaiLidarDriverWrapper.pyx":88
  *     def getLatestFrame(self, out_arr):
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
  *             raise ValueError("out_arr must be C-contiguous")
- *         cdef double* ptr = <double*> arr.data
+ *         cdef float* ptr = <float*> arr.data
 */
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_arr), __pyx_mstate_global->__pyx_n_u_flags); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -5866,10 +5866,10 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   if (unlikely(__pyx_t_4)) {
 
     /* "src/HesaiLidarDriverWrapper.pyx":89
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")             # <<<<<<<<<<<<<<
- *         cdef double* ptr = <double*> arr.data
+ *         cdef float* ptr = <float*> arr.data
  *         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
 */
     __pyx_t_1 = NULL;
@@ -5887,25 +5887,25 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
 
     /* "src/HesaiLidarDriverWrapper.pyx":88
  *     def getLatestFrame(self, out_arr):
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
  *             raise ValueError("out_arr must be C-contiguous")
- *         cdef double* ptr = <double*> arr.data
+ *         cdef float* ptr = <float*> arr.data
 */
   }
 
   /* "src/HesaiLidarDriverWrapper.pyx":90
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")
- *         cdef double* ptr = <double*> arr.data             # <<<<<<<<<<<<<<
+ *         cdef float* ptr = <float*> arr.data             # <<<<<<<<<<<<<<
  *         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
 */
-  __pyx_v_ptr = ((double *)__pyx_f_5numpy_7ndarray_4data_data(((PyArrayObject *)__pyx_v_arr)));
+  __pyx_v_ptr = ((float *)__pyx_f_5numpy_7ndarray_4data_data(((PyArrayObject *)__pyx_v_arr)));
 
   /* "src/HesaiLidarDriverWrapper.pyx":91
  *             raise ValueError("out_arr must be C-contiguous")
- *         cdef double* ptr = <double*> arr.data
+ *         cdef float* ptr = <float*> arr.data
  *         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)             # <<<<<<<<<<<<<<
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
@@ -5919,7 +5919,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   __pyx_v_result = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_6);
 
   /* "src/HesaiLidarDriverWrapper.pyx":92
- *         cdef double* ptr = <double*> arr.data
+ *         cdef float* ptr = <float*> arr.data
  *         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp             # <<<<<<<<<<<<<<
  * 
@@ -5956,7 +5956,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
  *         return self.cpp_driver.start()
  * 
  *     def getLatestFrame(self, out_arr):             # <<<<<<<<<<<<<<
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
 */
 
@@ -7487,7 +7487,7 @@ __Pyx_RefNannySetupContext("PyInit_HesaiLidar_driver_wrapper", 0);
  *         return self.cpp_driver.start()
  * 
  *     def getLatestFrame(self, out_arr):             # <<<<<<<<<<<<<<
- *         cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+ *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
 */
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_9getLatestFrame, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getLatestFrame, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
@@ -7641,16 +7641,16 @@ static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
     const struct { const unsigned int length: 8; } index[] = {{1},{7},{6},{2},{9},{50},{39},{34},{28},{31},{14},{5},{12},{25},{13},{31},{33},{19},{28},{23},{18},{19},{37},{20},{3},{18},{18},{5},{15},{19},{6},{18},{5},{8},{14},{9},{12},{12},{16},{4},{13},{5},{13},{17},{10},{11},{13},{17},{15},{19},{11},{8},{10},{8},{2},{5},{7},{1},{3},{8},{3},{9},{6},{5},{6},{11},{12},{10},{17},{13},{6},{1},{10},{4},{12},{10},{12},{19},{12},{12},{5},{8},{23},{6},{0},{212},{36},{70},{161},{13},{45},{9}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1117 bytes) */
-const char* const cstring = "BZh91AY&SY[\001\372\257\000\000j\177\377\367\377\367\275y\337\355\337\357\377\376\237\377\377\377\344\300@@@@@@@@@@@@\000@\000P\003\271c\272\224\000\327\010j\247\222\032\232z\031'\244\320\311\243#\320\200\320\001\240\000i\240\032dz\230\215\244\310i\351\265@\315&\236\220jj4\214\r\032S\324\365\036\215 \032\000\000\000\000\000\000\000\006\206@\000\000J&\2014LM)\372OB\230\322\236\232\201\220\r\r\036\246\200\000\000\r\000\000\000\315#\324\315B\032I<\243\0224l\246C&\201\220\000\000\032\000\000\000\000\000\000\006\215\000\340\000\000\000\000\000\000\014\206\200\000\000\000\000\000\000\000\346\014\252\255\351\357\010\277\347'd\345\344\377z\276\267[\371\376\231\233\267\312\025\2301\314\212\n\242%\311k\364\350'\236Hkx-\344\006G\241\317p\251\265\306j\305d\224 \322Nh\235\271\231\244X\001\335\337S2>\360\356\030\340\311\030\027\210\336\274\277\017\222\t\246P\344\200\342]<\277\023\255\"\037\002$C:@\213\312\365\347[\016\245/\030\203\30531ur \037\215F\231\316U\254\200\031qab\003D1\246;\257\245*\240z\230\tq4q\312\354\223\001\251\331>\0067(\331\016\005\241\276\177\256\t\264\016\254\004#\037m\203\236\031\024\312\032\027\343%\332h(\037L\366\225brN\222\0177N&\320K\207\222\335R\257\370-\200BD\217\030\346q\037\230\243\"\215hUj#E\030\023$\331\205G\020\247\242\367\334\267im6\207\004\000N\331\002\276\302\221\262N\250*;$!\010T\n\341\250\367\n3\326\332\236\204\301P\2244F\330\241.[\377\020\330\340d\346\247\261\262&_\2032x\240@\261\306\310q\323\021Q\010\036\001\223\264\233\263\021\2009\016\271c\211$:=\310t7\373\3473\307l\337\336KcU\366b\334\344%(\356\351|\267\371c\324\232>6\262#\267\030\030\031\303 \307\000\360\276\3568\007\355;u\203\330\311\213\372\225\025\342\222\364\212\002T\245\"\211\000D\000?\031\026\302&\0302\023\242\032B\202\267\233u\355\264ETU\021\203\260\210F\262jM\026\333BH\252h\351\357J\334K\201\243\0131B\031k\212\263\237\226h\313_\253\\E\013\252T\237B\244C\030\377|X\n\255\003\001h\367\225c\206\315K\002F\264\260W+\364&5\002y\372\0109\\r\334w[27\322\231\031\3517\261\235G\223B\0349\306d""\035\336V<\347\2551\311\351\005\005y\224\247o\030\264\350\312`e\\\345\215\271\237\206\023\311\222\23280\021\360\310\"E\363p\212\210\342$\020\323n\020\303Q\266\3733\310\215\210=R\325\316\227\212_1P\255h\311\022\314&IeS\267(\321u\276>\316\355)\222\005\252\227\270Q\\\n\266\362\035.\324\215:q\030\241v\352\251\260\035^\321\006t\211:\324ag\241\303\"\\\n^v\263w\013;\215.t\321\005Y\225\276\340/\216\264]Oe\255\365$\324\254T\241\253<\t\251\327\216u\351\307mt\024\201|<67\237(E-\0358BT$\211\302g{\321\"\245\324\243m\nc\0031\023\2050\251\340\341D[ \354\240\007\220\027|R\\\305\0303\005$\322\221\024\006\256\226\253\210\200\022\344=\210\"\226!\016p)\243\213\213\251g\003j\250\324\252\376\03508\304387\027F\350=\240\274\027\234~/Jt\nV\221\334J}\t\244\242P\017\003\353\311\261\004\366\331\304l\354p\241N\010Ucy\323\033\317\301\301b\325\300\002\307W\0030\343\007\355K\304-\177\223b\260\272\177\214\203\230\376\366\034l\204\302\226\336\255*\317%\261YE\344\262\rdB\267\016e\2116 \253\006\202\224v\202q\345\304\271\240\362'\356Z\001\320J3Q\322D\352\357P\270\324_Lv\0344\341\361\264\213(\332\241xBuE\227\013\211\242\252\271\033\362\025\212\361J\324\213\256\335\3218\246\007\025&\236\336B\016O\214Z\230(+\311su\2222?\361w$S\205\t\005\260\037\252\360";
-    PyObject *data = __Pyx_DecompressString(cstring, 1117, 2);
+    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1128 bytes) */
+const char* const cstring = "BZh91AY&SYP\245W\324\000\000j\177\377\367\377\367\275y\377\355\337\357\377\376\237\377\377\377\344\300@@@@@@@@@@@@\000@\000P\003\271j\316\224\000\316\030j\231\021\251\201\221\221\017Bd6\246\200\000\000\r\0324\320\321\246A\211\211\221\223Li\0316\223L\203SQ\244d\306\247\251\246\247\244\365\036\220\323OP\000\r\r\r\000\000\000\000\001\240\000\000\001(\232\004\322`R\237\351=&\22352\217SCj\0004h\000\000\000\r\000\000\003\032G\251\232\204\nSmQ\350\230M\244\001\246\004\006@\014C\021\200\232d\001\223 d\000\r0L\2308\000\000\000\000\000\000\000\000\000\000\000\000\000\000\001\221\314\031\325[\323\337\021\177\316N\301\313\311\345z\337/\363\37537k\375\n\0301\314\212\n\242%\251c\362\304\235\362CS\301\177\342\003#\320\335p\251\261\305\225\212\311(A\244\234\321;S,\223\235\206\270*,\270\264\366\362\306\205\311`a \315\263\240\341\020\222E\014H\0168\270\017-\231W\020\016\001\021!\243\220\"\362\274JZ\t\221!T\231@\222\227\224\276+\243\361\210$Qnj\310\001\266\326\026 2C\r\362\022:\324\200-\230\003\314V\207\n\010\036`\021\376*\246\313\305\3230\3300w\264\346\242j\374\234jd\017E\346\240\347z%B\206y\310\tvY\n\007:\343(\275\024\235$#\263R!\354K\307\212\325Z\256x-<\204H?\214\321/\313\211\2206\370\316\006\021\314\212\274\\\356\212\266kW+\243\324\257\277|_G$\325T\321\242\005}u#\242N\250*;\004!\010T\n\341\250\367\n3\326\332\236\204\301P\225\206j!\"v\355\245|\024-$X\276\264\205\000\020\374\204APX\263Cz\"\325\302L\314\300\206\000\202\345&\353\010\300\034\207X\320\342I\016\363\210;}\37673\373\225m\335\233\351t\251\205\232[$%(\357m\276[9c\322\232>6\262#\263``g\014\203\034\003\302\373\272p\017\336v\353\007\260\202\023\376l\315Pj\256R\360I\262F\220\031\021\231\0214\3044\320\000\201!\002\260\304O\002\3755Tu\355\317\021U\025D`\353\242\021\254\232\223E\266\320\222*\233^\036\364\255\310\270\0320\321\222\020\317r*\316~vF[\236\255q\024.\251R}\305H\206Q\352\361b*\264\014E\243\336U\226:\365,\t\033\211\240W+\366\223*\201<\375\242\016W\034\267\035\ry\233\351L\314)7\261\202\217&\2048p\031\220wwX\363ui\226oH(+""\314\345;zb\323\243)\201\235s\226V\330\374q\236l\224\332\347\342#\341\230D\213\346\341\025\021\304H!\246\334a\216\243e\3720\221\035\010=R\325\301/\024\276b\241Z\321\222&\214fIeS\266\350\321u\2766\276\202S4\013U/p\242\270\025m\3448\37324\351\310b\205\334\345SX:\275\202\014\351\022u\250\302\317i\303\"\\\n^vl\340Y\334is\246\210*\314\255\367\001|w\021u=\226\267\324\223R\261R\206\254 MN\264p_\022;+\240\244\013\341\3411\274\371B)h\351\302\022\241$N\023\007\275\022*]J6\300\246P,\"p\2465<\034(\213d\0362\000J\002\356\tWO\300\014\301E52\037t\325\324\352\266\207A.C\330\202)_\006\016\200BL0\317jb\257\260\037\"<\327\226\030\000\301\265\000\224Re\200uV)\211\023\247Y\311w6\342\034(\312\227 \223\n\001\340}\3160\202Q\232D1\250\345i=A\345Aj3\307\032`\321@\264\260\300\255\036\032\357\225\t\322\277\025\371~\254?\257U+k\203k\177T\021\027\t\0107[\320\334\271\371\321tAsYp\265\260\245\333\221\254h\330S\315I\2313x\002J\305\201{Q\264\017\334\326\201\220E[\371H\240mV\355/_\201N\322\314/\260qgX\273\266vEw\203\302\225\032\342\270\222=\345\345\303\205/\035\264\032s\213\266s\"D\214\030R\357<\350G\261=R\263\005B\274\2177Q##\377\027rE8P\220P\245W\324";
+    PyObject *data = __Pyx_DecompressString(cstring, 1128, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
     #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (976 bytes) */
-const char* const cstring = "x\332uSMO\033G\030\306V\232.\201\264\0205Em\242\310\244R\251\222`\212Z%\025M\233Z\320\246I!\211\013\310\022\020\206\361\354\330\236\260\336Y\317\314\032[B*G\037\367\270\307=\356q\217>r\3448\307=\346'\360\023\372\316\332@\014\211e\317\274\237\317\274\037\217\237\331L\342\252C\251k\316:ar \331./\330\264\206}G\025\020\022\324\366\tE\250`\373\264\240x\301\345\356\274\022\254\315\260\003^\302\\\246\020r\375\246\327-\"\302\005-6!\217a!p\267P\303\014\340L\026kz\\\250\017\303\374&V\215+\021\334W\010r\013M_\252B\225\026\226\347\tw\025\253\373\334\227R\220\205\277\251\304l\225\331X\254@\rTT\004\366<*\212^\267\363TBYn]r_\020\372\273\257j\363\277,\243\345\327\2576^<\337|\275\271~\221\211\354,\025\035\014r\337t3\327\000oD)\236wO\272\252\301]\204.\273%URa\365\251\000\342pIGMu\252V!A\252\277\004n^\365\255\003\232/G\315f\304\243\026xS\\2\371\236\r\260\353.\366d\203\253\025&(Q\\tME\035\370\2550\242\320+\332Q\377\302ba7\262\353\022\306\213\260\t\2308s\251$\016\234\210\271H\tLh\025\223\375\254x\0100H\014z\003||IE\004\006\350\022>d\013jR)q\235\"\263\311\232\203\353\022\241\232\357\022\204F\273>\3573s\014\006\210\032\\\302\352m[\000\306\207\262y##\031\223\350\274\\\246hS:\3312\207a#\212\311\031\030T\327\243\016\257#\233\211\314\010\242\244\302l\237\215*\227\274\246\203K\3520\242\016\034\313\340P\023\303\270\340\323\344\266\357P#\271\320\034\234^\306\363!\225=\217{\236\"\031\204\247\204\327EU\256\024\207\000\000 pJ\027\016\305=\204\200\304h8\215\226\217\235\001\332\305?\360\n\033\317\r\264cD\t+\220\222`Wf\217I\352\3242\206\016\313\002\351lO\027\274E\037\341\260\004\022\235\rL\016\te\364\214u\010\2315\"\364\t\276\265\261\343SyT:\375vl|\262\367s\3570\374)\304\351\344T\360E\310\343rj\335\217\036\306\225\244\224\354\034\337=\251\350\215]\275\273\247\367\352\272\336\320\r\226Zs\321a\362\244?\333_L\255\037\342\233I\245_\352\227/\304\235\223{\272\002\031\020\373N\277k\351\226\320BB\222\236[\322K/O\346ty[o\357\244\326\203x\241?s\234;\276\253\327\336\352\267\266\266]\355z\332;\320\007\035\335""\351\246\326\227=\025\374\032\322h1Z\325?.\353\345M\275\2115\336\327\373\377\235\216\215\375\221_\313\303\265\226\3373\327^\3367\227\237o\347\217J\2515\221u\364$\2325\035M\204\217\243i#\\\013J\203\016\261\211y\234\340A\240\014\276\017s!D\334\n\036\204\245\020\032\271\023.E\353q.\265\036\305+\311D\377\331\311\354\311\242)\247\035l\205\355h+n'[\375\366q\031\246wcl\374^\270\021\335\211_&\370\324\032\033\277\331+\365\326\203\353\001@O\005\237\005\345\240\032~\036\266\242\361x\372\2755\t\276\215\340\353\240\225Z\323\301\355\000\007\"\234\211r\3217\361\354\300\267\035^\207\025|\334\267\233\365`}\025\374\031N\207\367\303\3470\223\027q\371\375\360\021\014\230S\267\317\204\351\363\257is0\304ZT2\312w\321\323\370 \301\311\341\361o\372MEW`\234D\023X\022\014\325I\341\245\177\364\314B\334JrG\271\364\332\215\336\303\240\374?\312\010\237\261";
+const char* const cstring = "x\332uS\317O\033G\024\306V\232\232@Z\0345EM\243\310\244Ri\223b\212R%U\2326\265\240M\223B\022\007\220% \014\343\331\261=a\275\263\236\2315\266\204T\216>\356q\217{\334\343\036}\364\321\3079\372\230?\201?\241o\326\306\304\220X\366\314\373=\357}\357\363S\213I\\\266)u\314Y%L\016%\313\3419\213V\260g\253\034B\202Z\036\241\010\345,\217\346\024\3179\334YR\2025\031\266\301K\230\303\024B\216Ww\333yD\270\240\371:\3441,\004n\347*\230A9\223\305\352.\027\352\3030\257\216U\355R\004\367\024\202\334\\\335\223*W\246\271\325%\302\035\305\252\036\367\244\024d\371\037*1[g\026\026k\320\003\025%\201]\227\212\274\333n=\221\320\226S\225\334\023\204\376\341\251\312\322\257\253h\365\325\313\255\347\317\266_mo\236g\"+IEG\303\334\327\355\3045\2547\241\344\307\323\223\266\252q\007\241\213nI\225TX}*\200\330\\\322IS\225\252uH\220\352o\201\353\227}\233P\315\223\223f\003\361\244\005\336\024\027L\236kA\331M\007\273\262\306\325\032\023\224(.\332\246\243\026\374\326\030Q\350%m\2517\260X\330\215l;\204\361<l\002\020g\016\225\304\206\0231\007)\201\t-cr\2304\017\001\246\022\203\331\240>\276\240\"\002\000:\204\217\330\202\352TJ\\\245\310l\262b\343\252D\250\3429\004\241\311\251\307s&\216!\200\250\306%\254\336\262\004\324\370P6o$$c\022\215\333e\212\326\245\235,s\0246\241\230\234\241A\265]j\363*\262\230H\214 J*\314\366\331\244r\301k&\270\240\216\"\252\300\261\244\034\252c\200\013>uny65\222\003\303\301\351&<\037Q\331u\271\353*\222\224p\225p\333\250\314\225\342\020\000\005\010\234\322\201Cq\027! 1\032\241\321\360\260=\254v\376\017\274\304\306\261\201\266\214(a\005R\022\354\310\3441I\355J\302\320Q[ \235\355\351\234\267\350#\034\226@\2423\300\344\210PFOX\207\220Y#B\237\340[\023\333\036\225'\205\323[S\323\263\235_:\307\301\203\000\017f\347\374/\002\036\025\007\231\273\341\375\250\024\027\342\275\336\355~Io\355\353\375\003}P\325\325\232\256\261Af1<\216\037u\027\272+\203\314\017\321\365\270\324-t\213\347\342^\377\216.A\006\304\276\323\357\032\272!\264\220\220\244\027\037\353\307/\372\213\272\270\253w\367\006\231{\321r""w\276\227\352\335\326\033o\365[K[\216v\\\355\036\351\243\226n\265\007\231/;\312\377-\240\341J\270\256\177^\325\253\333z\033k|\250\017\377;\235\232\3723\275\221\206k#}`\256\203\264g./\335L\237\024\006\231\231d\242G\341\202\231h&x\030f\215p\305/\014'\304&\346a\214\207\201\322\377>H\005\020q\303\277\027\024\002\030\344V\360c\370 \004\367O\321Z<\323}\332_\350\257\230v\232\376N\320\014w\242f\274\323m\366\212\200\336\265\251\351;\301V\370m\364\"\306\247\231\251\351\353\235Bg\323\277\352C\356\234\377\231_\364\313\301\347A#\234\216\262\3573\263\340\333\362\277\366\033\203L\326\277\351c_\004\363a*\374&Z\030\372v\203\253\260\202\217\373\366\223\0312_\371\177\005\331\340n\360\0140y\036\025\337\217\036\301Ps\356\346\231\220\035\177\315\230C\020+a\301(\337\205O\242\243\030\307\307\275\337\365\353\222.\001\234D\023X\022\200j\017\340\245\177\365\374r\324\210S'\251\301\225k\235\373~\361\177\3604\237\327";
     PyObject *data = __Pyx_DecompressString(cstring, 976, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
@@ -7658,7 +7658,7 @@ const char* const cstring = "x\332uSMO\033G\030\306V\232.\201\264\0205Em\242\310
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
     #else /* compression: none (1660 bytes) */
-const char* const bytes = "?disableenablegcisenabledno default __reduce__ due to non-trivial __cinit__numpy._core.multiarray failed to importnumpy._core.umath failed to importout_arr must be C-contiguoussrc/HesaiLidarDriverWrapper.pyx<stringsource>utf-8C_CONTIGUOUSHesaiLidar_driver_wrapperPyHesaiDriverPyHesaiDriver.__reduce_cython__PyHesaiDriver.__setstate_cython__PyHesaiDriver.closePyHesaiDriver.getLatestFramePyHesaiDriver.getStatusPyHesaiDriver.initPyHesaiDriver.startPyHesaiDriver.updateSnapshotDirectory__Pyx_PyDict_NextRefarrasyncio.coroutinescline_in_tracebackclosecorrection_datacorrection_data_cppencodefault_message_portflags__func__getLatestFramegetStatus__getstate__host_addresshost_address_cppinit_is_coroutineitemslidar_addresslidar_address_cpplidar_typelog_dir_cpplog_server_iplog_server_ip_cpplog_server_portlog_server_port_cpplogging_dir__main____module____name__npnumpyout_arrppopptc_portptrpy_bottompy_macpy_snpy_top__pyx_state__qualname____reduce____reduce_cython____reduce_ex__resultsscans_portself__set_name__setdefault__setstate____setstate_cython__snap_dir_cppsnapshot_dirstart__test__updateSnapshotDirectoryvalues\200A\360\032\000\t\014\2104\210|\2303\230a\330\014\020\220\016\230o\250Q\330\010\"\240+\250W\260A\260\\\300\034\310W\320T^\320^`\320`g\320gh\320hi\330\010'\240|\2607\270!\2701\330\010(\250\r\260W\270A\270Q\330\010(\250\r\260W\270A\270\\\310\036\320W^\320^h\320hj\320jq\320qr\320rs\330\010'\320':\320:J\310'\320Q[\320[\\\330\010*\250/\270\027\300\001\300\034\320M]\320]d\320dn\320np\320pw\320wx\320xy\330\010\017\210t\220;\230e\2401\240L\3200C\320CU\320Ua\320ak\320k\177\360\000\000@\002M\002\360\000\000M\002`\002\360\000\000`\002u\002\360\000\000u\002v\002\200A\330\010\013\2104\210|\2307\240!\330\014\020\220\013\2306\240\021\330\014\020\220\004\220A\330\014\020\220\016\230a\200A\330\0106\260a\330\010\013\2104\210s\220&\230\001\230\021\330\014\022\220*\230A\230Q\330\010\033\230:\240S\250\001\330\010,\250D\260\013\270?\310!\3101\330\010\017\210v\220Z\230v\240Z\250v\260Z\270v\300Q""\200A\360\n\000\t\036\230T\240\033\250J\260a\360\010\000\t\r\210A\210S\220\006\220a\330\010\020\220\005\220Q\220b\230\007\230q\240\t\250\021\340\010\014\210A\210T\220\026\220q\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210[\230\006\230a\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210^\2306\240\021\330\010\024\220E\230\021\230\"\230G\2401\240I\250Q\340\010\020\220\005\220Q\220a\220q\330\020\025\220Q\220a\220q\330\020\021\330\020\021\330\020\021\330\020\021\200A\330\010\017\210t\220;\230f\240A\200A\330\010#\240<\250w\260a\260|\300=\320PW\320Wa\320ac\320cj\320jk\320kl\330\010\014\210K\320\027/\250q\260\001\200\001\330\004\n\210+\220Q";
+const char* const bytes = "?disableenablegcisenabledno default __reduce__ due to non-trivial __cinit__numpy._core.multiarray failed to importnumpy._core.umath failed to importout_arr must be C-contiguoussrc/HesaiLidarDriverWrapper.pyx<stringsource>utf-8C_CONTIGUOUSHesaiLidar_driver_wrapperPyHesaiDriverPyHesaiDriver.__reduce_cython__PyHesaiDriver.__setstate_cython__PyHesaiDriver.closePyHesaiDriver.getLatestFramePyHesaiDriver.getStatusPyHesaiDriver.initPyHesaiDriver.startPyHesaiDriver.updateSnapshotDirectory__Pyx_PyDict_NextRefarrasyncio.coroutinescline_in_tracebackclosecorrection_datacorrection_data_cppencodefault_message_portflags__func__getLatestFramegetStatus__getstate__host_addresshost_address_cppinit_is_coroutineitemslidar_addresslidar_address_cpplidar_typelog_dir_cpplog_server_iplog_server_ip_cpplog_server_portlog_server_port_cpplogging_dir__main____module____name__npnumpyout_arrppopptc_portptrpy_bottompy_macpy_snpy_top__pyx_state__qualname____reduce____reduce_cython____reduce_ex__resultsscans_portself__set_name__setdefault__setstate____setstate_cython__snap_dir_cppsnapshot_dirstart__test__updateSnapshotDirectoryvalues\200A\360\032\000\t\014\2104\210|\2303\230a\330\014\020\220\016\230o\250Q\330\010\"\240+\250W\260A\260\\\300\034\310W\320T^\320^`\320`g\320gh\320hi\330\010'\240|\2607\270!\2701\330\010(\250\r\260W\270A\270Q\330\010(\250\r\260W\270A\270\\\310\036\320W^\320^h\320hj\320jq\320qr\320rs\330\010'\320':\320:J\310'\320Q[\320[\\\330\010*\250/\270\027\300\001\300\034\320M]\320]d\320dn\320np\320pw\320wx\320xy\330\010\017\210t\220;\230e\2401\240L\3200C\320CU\320Ua\320ak\320k\177\360\000\000@\002M\002\360\000\000M\002`\002\360\000\000`\002u\002\360\000\000u\002v\002\200A\330\010\013\2104\210|\2307\240!\330\014\020\220\013\2306\240\021\330\014\020\220\004\220A\330\014\020\220\016\230a\200A\330\0106\260a\330\010\013\2104\210s\220&\230\001\230\021\330\014\022\220*\230A\230Q\330\010\032\230)\2403\240a\330\010,\250D\260\013\270?\310!\3101\330\010\017\210v\220Z\230v\240Z\250v\260Z\270v\300Q""\200A\360\n\000\t\036\230T\240\033\250J\260a\360\010\000\t\r\210A\210S\220\006\220a\330\010\020\220\005\220Q\220b\230\007\230q\240\t\250\021\340\010\014\210A\210T\220\026\220q\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210[\230\006\230a\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210^\2306\240\021\330\010\024\220E\230\021\230\"\230G\2401\240I\250Q\340\010\020\220\005\220Q\220a\220q\330\020\025\220Q\220a\220q\330\020\021\330\020\021\330\020\021\330\020\021\200A\330\010\017\210t\220;\230f\240A\200A\330\010#\240<\250w\260a\260|\300=\320PW\320Wa\320ac\320cj\320jk\320kl\330\010\014\210K\320\027/\250q\260\001\200\001\330\004\n\210+\220Q";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
@@ -7751,7 +7751,7 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 86};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_out_arr, __pyx_mstate->__pyx_n_u_arr, __pyx_mstate->__pyx_n_u_ptr, __pyx_mstate->__pyx_n_u_result};
-    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_getLatestFrame, __pyx_mstate->__pyx_kp_b_iso88591_A_6a_4s_AQ_S_D_1_vZvZvZvQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_getLatestFrame, __pyx_mstate->__pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_1_vZvZvZvQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 94};

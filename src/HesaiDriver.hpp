@@ -58,7 +58,7 @@ public:
       const std::string& correctionData
     );
     bool start();
-    PointCloudFetchResult getLatestFrame(double* out_buf);
+    PointCloudFetchResult getLatestFrame(float* out_buf);
     bool periodicStatusThread();
     LidarStatus getStatus() const;
     void updateSnapshotDirectory(const std::string& snapshot_dir);

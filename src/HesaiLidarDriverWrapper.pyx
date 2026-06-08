@@ -42,7 +42,7 @@ cdef extern from "HesaiDriver.hpp":
         bint start()
         LidarStatus getStatus() const
         void close()
-        PointCloudFetchResult getLatestFrame(double* out_buf) except +
+        PointCloudFetchResult getLatestFrame(float* out_buf) except +
         void updateSnapshotDirectory(string snapshot_dir) except +
 
 cdef class PyHesaiDriver:
@@ -84,12 +84,12 @@ cdef class PyHesaiDriver:
         return self.cpp_driver.start()
 
     def getLatestFrame(self, out_arr):
-        cdef cnp.ndarray[cnp.float64_t, ndim=2] arr = out_arr
+        cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
         if not arr.flags['C_CONTIGUOUS']:
             raise ValueError("out_arr must be C-contiguous")
-        cdef double* ptr = <double*> arr.data
+        cdef float* ptr = <float*> arr.data
         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
-        return result.success, result.dt_wait, result.dt_proc, result.timestamp
+        return result.success, result.dt_wait, result.dt_proc, result.timestamp    
 
     def updateSnapshotDirectory(self, snapshot_dir):
         cdef string snap_dir_cpp = snapshot_dir.encode('utf-8') if snapshot_dir is not None else "".encode("utf-8")

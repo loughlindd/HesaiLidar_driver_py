@@ -21,8 +21,8 @@ LidarDecodedFrame<LidarPointXYZICRT> latest_frame;
 auto dt_logpcap = std::chrono::duration<float>(0.0f).count();
 auto dt_frame = std::chrono::duration<float>(0.0f).count();
 
-// buf of size 230400*4
-double out_buf_cache[230400*4];
+// buf of size 230400*4 - 128*900 is 115200 but dual return
+float out_buf_cache[230400*4];
 
 // pcap related variables
 uint64_t t_pcap_log_start = 0.0;
@@ -170,7 +170,7 @@ void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {
   dt_frame = std::chrono::duration<float>(t1 - t0).count();
 }
 
-PointCloudFetchResult returnLatestCloud(double* out_buf) {
+PointCloudFetchResult returnLatestCloud(float* out_buf) {
     std::memcpy(out_buf, out_buf_cache, sizeof(out_buf_cache));
     float dt_tot = dt_frame + dt_logpcap;
     return {true, 0, dt_tot, latest_frame.frame_start_timestamp};

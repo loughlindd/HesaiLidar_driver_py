@@ -204,7 +204,7 @@ bool HesaiDriver::start() {
     // }
 }
 
-PointCloudFetchResult HesaiDriver::getLatestFrame(double* out_buf) {
+PointCloudFetchResult HesaiDriver::getLatestFrame(float* out_buf) {
     uint64_t now = nowtUTC();
     if (last_frame_time != 0 && now - last_frame_time > 5) {
         return {false, 0.0f, 0.0f, 0.0f};

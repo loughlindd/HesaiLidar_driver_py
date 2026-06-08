@@ -25,4 +25,4 @@ void rawPacketCallback(const UdpFrame_t& udp_packets, double timestamp, const st
 
 void faultMessageCallback(const FaultMessageInfo& fault_message_info);
 
-PointCloudFetchResult returnLatestCloud(double* out_buf);
+PointCloudFetchResult returnLatestCloud(float* out_buf);
