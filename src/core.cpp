@@ -1,4 +1,5 @@
-#include "hesai_lidar_sdk.hpp"
+#include "HesaiDriver.hpp"
+#include "core.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
@@ -13,30 +14,27 @@
 // #define LIDAR_PARSER_TCP_TEST
 
 uint64_t last_frame_time = 0;
+uint32_t last_frame_index_recv = 0;
+uint32_t last_frame_index_sent = 0;
+bool pcap_parser_mode = false;
 uint32_t cur_frame_time = 0;
 bool running = true;
 int kMaxTimeInterval = 250000;
 
 LidarDecodedFrame<LidarPointXYZICRT> latest_frame;
-auto dt_logpcap = std::chrono::duration<float>(0.0f).count();
-auto dt_frame = std::chrono::duration<float>(0.0f).count();
+float dt_logpcap = std::chrono::duration<float>(0.0f).count();
+float dt_frame = std::chrono::duration<float>(0.0f).count();
 
 // buf of size 230400*4 - 128*900 is 115200 but dual return
 float out_buf_cache[230400*4];
+
+std::vector<StoredFrame> pcap_frames;
 
 // pcap related variables
 uint64_t t_pcap_log_start = 0.0;
 std::string snapshot_directory_prev = "";
 std::ofstream g_pcap_log_file;
 std::ofstream g_pcap_log_file_snapshot;
-
-struct PointCloudFetchResult
-{
-    bool success;
-    float dt_wait;
-    float dt_proc;
-    double timestamp;
-};
 
 // ---- PCAP format structures ----
 #pragma pack(push, 1)
@@ -153,6 +151,13 @@ void WritePcapPacket(std::ofstream& f, const hesai::lidar::UdpPacket& pkt,
 void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {  
   auto t0 = std::chrono::system_clock::now();
   last_frame_time = nowtUTC();
+  last_frame_index_recv = frame.frame_index;
+
+  StoredFrame stored_frame;
+  if (pcap_parser_mode) {
+      stored_frame.points.resize(230400 * 4, 0.0f);
+      stored_frame.timestamp = static_cast<double>(frame.frame_end_timestamp);
+  }
 
   // Copy point cloud data to output buffer
   size_t num_points = frame.points_num;
@@ -164,6 +169,16 @@ void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {
       out_buf_cache[i * 4 + 1] = pt.y;
       out_buf_cache[i * 4 + 2] = pt.z;
       out_buf_cache[i * 4 + 3] = pt.intensity;
+        if (pcap_parser_mode) {
+          stored_frame.points[i * 4 + 0] = pt.x;
+          stored_frame.points[i * 4 + 1] = pt.y;
+          stored_frame.points[i * 4 + 2] = pt.z;
+          stored_frame.points[i * 4 + 3] = pt.intensity;
+        }
+  }
+
+  if (pcap_parser_mode) {
+    pcap_frames.push_back(std::move(stored_frame));
   }
 
   auto t1 = std::chrono::system_clock::now();
@@ -173,7 +188,11 @@ void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {
 PointCloudFetchResult returnLatestCloud(float* out_buf) {
     std::memcpy(out_buf, out_buf_cache, sizeof(out_buf_cache));
     float dt_tot = dt_frame + dt_logpcap;
-    return {true, 0, dt_tot, latest_frame.frame_start_timestamp};
+    return {true, 0, dt_tot, static_cast<double>(last_frame_index_recv)};
+}
+
+void resetPcapFrameBuffer() {
+  pcap_frames.clear();
 }
 
 void faultMessageCallback(const FaultMessageInfo& fault_message_info) {

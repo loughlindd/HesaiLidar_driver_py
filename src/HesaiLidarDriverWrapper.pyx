@@ -37,13 +37,21 @@ cdef extern from "HesaiDriver.hpp":
                   string logging_dir,
                   string log_server_ip,
                   int log_server_port,
-                  string correction_data
+                  string correction_data,
+                  bint pcap_parser_enabled,
+                  string pcap_parser_file_path
                   ) except +
         bint start()
         LidarStatus getStatus() const
         void close()
         PointCloudFetchResult getLatestFrame(float* out_buf) except +
         void updateSnapshotDirectory(string snapshot_dir) except +
+
+cdef extern from *:
+    """
+    PointCloudFetchResult getNextPcapFrame(float* out_buf);
+    """
+    PointCloudFetchResult getNextPcapFrame(float* out_buf) except +
 
 cdef class PyHesaiDriver:
     cdef HesaiDriver* cpp_driver
@@ -68,7 +76,9 @@ cdef class PyHesaiDriver:
         logging_dir,
         log_server_ip,
         int log_server_port,
-        correction_data
+        correction_data,
+        pcap_parser_enabled,
+        pcap_parser_file_path
     ):
         if self.cpp_driver is NULL:
             self.cpp_driver = new HesaiDriver()
@@ -78,7 +88,9 @@ cdef class PyHesaiDriver:
         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
-        return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp)
+        cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
+        cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')
+        return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)
 
     def start(self):
         return self.cpp_driver.start()
@@ -90,6 +102,14 @@ cdef class PyHesaiDriver:
         cdef float* ptr = <float*> arr.data
         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
         return result.success, result.dt_wait, result.dt_proc, result.timestamp    
+
+    def getNextPcapFrame(self, out_arr):
+        cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
+        if not arr.flags['C_CONTIGUOUS']:
+            raise ValueError("out_arr must be C-contiguous")
+        cdef float* ptr = <float*> arr.data
+        cdef PointCloudFetchResult result = getNextPcapFrame(ptr)
+        return result.success, result.dt_wait, result.dt_proc, result.timestamp
 
     def updateSnapshotDirectory(self, snapshot_dir):
         cdef string snap_dir_cpp = snapshot_dir.encode('utf-8') if snapshot_dir is not None else "".encode("utf-8")

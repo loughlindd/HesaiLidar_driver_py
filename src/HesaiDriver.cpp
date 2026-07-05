@@ -26,7 +26,9 @@ bool HesaiDriver::init(
     const std::string& logging_dir,
     const std::string& log_server_ip,
     int log_server_port,
-    const std::string& correctionData
+    const std::string& correctionData,
+    bool pcap_parser_enabled,
+    const std::string& pcap_parser_file_path
 ) {
     // Ensure no stale resources from a prior session remain bound.
     close();
@@ -44,6 +46,10 @@ bool HesaiDriver::init(
     // Reset global frame state so stale timestamps from a previous session don't
     // trigger the connection-loss path in getLatestFrame before any frame arrives.
     last_frame_time = 0;
+    last_frame_index_recv = 0;
+    last_frame_index_sent = 0;
+    pcap_parser_mode = pcap_parser_enabled;
+    resetPcapFrameBuffer();
 
     // Stop and destroy the previous SDK instance before creating a fresh one.
     // The sleep gives the SDK's internal receive threads time to fully terminate
@@ -95,6 +101,14 @@ bool HesaiDriver::init(
 
     param.input_param.recv_point_cloud_timeout = 0.5; // seconds
     param.input_param.ptc_connect_timeout = 0.5; // seconds
+
+    if (pcap_parser_enabled) {
+        param.input_param.source_type = DATA_FROM_PCAP;
+        param.input_param.pcap_path = pcap_parser_file_path;
+
+        param.decoder_param.pcap_play_synchronization = false;
+        param.decoder_param.pcap_play_in_loop = false;
+    }
 
     // param.input_param.source_type = DATA_FROM_PCAP;
     // param.input_param.pcap_path = "E:/aeroViz/dev/2026-04-14-ReplayHesaiPCAP/1776201541.pcap";
@@ -211,6 +225,19 @@ PointCloudFetchResult HesaiDriver::getLatestFrame(float* out_buf) {
     }
     PointCloudFetchResult result = returnLatestCloud(out_buf);
     return result;
+}
+
+PointCloudFetchResult getNextPcapFrame(float* out_buf) {
+    if (last_frame_index_sent >= pcap_frames.size()) {
+        return {false, 0.0f, 0.0f, 0.0f};
+    }
+
+    const StoredFrame& frame = pcap_frames[last_frame_index_sent];
+    std::memcpy(out_buf, frame.points.data(), frame.points.size() * sizeof(float));
+    last_frame_index_sent += 1;
+
+    float dt_tot = dt_frame + dt_logpcap;
+    return {true, 0.0f, dt_tot, frame.timestamp};
 }
 
 // Return the LidarStatus object so the wrapper can handle conversion to Python.

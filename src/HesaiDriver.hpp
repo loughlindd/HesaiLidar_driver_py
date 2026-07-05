@@ -55,7 +55,9 @@ public:
       const std::string& logging_dir, 
       const std::string& log_server_ip, 
       int log_server_port,
-      const std::string& correctionData
+      const std::string& correctionData,
+      bool pcap_parser_enabled,
+      const std::string& pcap_parser_file_path
     );
     bool start();
     PointCloudFetchResult getLatestFrame(float* out_buf);
