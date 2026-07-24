@@ -88,7 +88,7 @@ bool HesaiDriver::init(
     param.input_param.multicast_ip_address = "";
 
     param.input_param.ptc_mode = PtcMode::tcp;
-    param.input_param.use_ptc_connected = false;  // true: use PTC connected, false: recv correction from local file
+    param.input_param.use_ptc_connected = true;  // true: use PTC connected, false: recv correction from local file
     param.input_param.correction_file_path = correctionData;
     param.input_param.firetimes_path = "Your firetime file path";
 
