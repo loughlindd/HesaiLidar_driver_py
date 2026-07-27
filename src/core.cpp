@@ -13,22 +13,17 @@
 // #define EXTERNAL_INPUT_PARSER_TEST
 // #define LIDAR_PARSER_TCP_TEST
 
-uint64_t last_frame_time = 0;
-uint32_t last_frame_index_recv = 0;
-uint32_t last_frame_index_sent = 0;
-bool pcap_parser_mode = false;
+// Unused legacy globals (kept as-is).
 uint32_t cur_frame_time = 0;
 bool running = true;
 int kMaxTimeInterval = 250000;
 
 LidarDecodedFrame<LidarPointXYZICRT> latest_frame;
+
+// dt_logpcap stays global with the pcap-logging path. The per-frame/replay
+// state (last_frame_time, indices, out_buf_cache, dt_frame, pcap_frames) moved
+// into HesaiDriver so multiple drivers no longer share it.
 float dt_logpcap = std::chrono::duration<float>(0.0f).count();
-float dt_frame = std::chrono::duration<float>(0.0f).count();
-
-// buf of size 230400*4 - 128*900 is 115200 but dual return
-float out_buf_cache[230400*4];
-
-std::vector<StoredFrame> pcap_frames;
 
 // pcap related variables
 uint64_t t_pcap_log_start = 0.0;
@@ -148,13 +143,13 @@ void WritePcapPacket(std::ofstream& f, const hesai::lidar::UdpPacket& pkt,
 }
 
 //log info, display frame message
-void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {  
+void HesaiDriver::lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {
   auto t0 = std::chrono::system_clock::now();
-  last_frame_time = nowtUTC();
-  last_frame_index_recv = frame.frame_index;
+  last_frame_time_ = nowtUTC();
+  last_frame_index_recv_ = frame.frame_index;
 
   StoredFrame stored_frame;
-  if (pcap_parser_mode) {
+  if (pcap_parser_mode_) {
       stored_frame.points.resize(230400 * 4, 0.0f);
       stored_frame.timestamp = static_cast<double>(frame.frame_end_timestamp);
   }
@@ -163,13 +158,13 @@ void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {
   size_t num_points = frame.points_num;
   for (size_t i = 0; i < num_points; ++i) {
       if (i >= 230400) break; // Prevent buffer overflow, adjust as needed
-      
+
       const auto& pt = frame.points[i];
-      out_buf_cache[i * 4 + 0] = pt.x;
-      out_buf_cache[i * 4 + 1] = pt.y;
-      out_buf_cache[i * 4 + 2] = pt.z;
-      out_buf_cache[i * 4 + 3] = pt.intensity;
-        if (pcap_parser_mode) {
+      out_buf_cache_[i * 4 + 0] = pt.x;
+      out_buf_cache_[i * 4 + 1] = pt.y;
+      out_buf_cache_[i * 4 + 2] = pt.z;
+      out_buf_cache_[i * 4 + 3] = pt.intensity;
+        if (pcap_parser_mode_) {
           stored_frame.points[i * 4 + 0] = pt.x;
           stored_frame.points[i * 4 + 1] = pt.y;
           stored_frame.points[i * 4 + 2] = pt.z;
@@ -177,22 +172,23 @@ void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame) {
         }
   }
 
-  if (pcap_parser_mode) {
-    pcap_frames.push_back(std::move(stored_frame));
+  if (pcap_parser_mode_) {
+    pcap_frames_.push_back(std::move(stored_frame));
   }
 
   auto t1 = std::chrono::system_clock::now();
-  dt_frame = std::chrono::duration<float>(t1 - t0).count();
+  dt_frame_ = std::chrono::duration<float>(t1 - t0).count();
 }
 
-PointCloudFetchResult returnLatestCloud(float* out_buf) {
-    std::memcpy(out_buf, out_buf_cache, sizeof(out_buf_cache));
-    float dt_tot = dt_frame + dt_logpcap;
-    return {true, 0, dt_tot, static_cast<double>(last_frame_index_recv)};
+PointCloudFetchResult HesaiDriver::returnLatestCloud(float* out_buf) {
+    std::memcpy(out_buf, out_buf_cache_, sizeof(out_buf_cache_));
+    float dt_tot = dt_frame_ + dt_logpcap;
+    return {true, 0, dt_tot, static_cast<double>(last_frame_index_recv_)};
 }
 
-void resetPcapFrameBuffer() {
-  pcap_frames.clear();
+void HesaiDriver::resetPcapFrameBuffer() {
+  pcap_frames_.clear();
+  last_frame_index_sent_ = 0;
 }
 
 void faultMessageCallback(const FaultMessageInfo& fault_message_info) {

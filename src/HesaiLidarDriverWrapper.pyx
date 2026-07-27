@@ -45,13 +45,8 @@ cdef extern from "HesaiDriver.hpp":
         LidarStatus getStatus() const
         void close()
         PointCloudFetchResult getLatestFrame(float* out_buf) except +
+        PointCloudFetchResult getNextPcapFrame(float* out_buf) except +
         void updateSnapshotDirectory(string snapshot_dir) except +
-
-cdef extern from *:
-    """
-    PointCloudFetchResult getNextPcapFrame(float* out_buf);
-    """
-    PointCloudFetchResult getNextPcapFrame(float* out_buf) except +
 
 cdef class PyHesaiDriver:
     cdef HesaiDriver* cpp_driver
@@ -108,7 +103,7 @@ cdef class PyHesaiDriver:
         if not arr.flags['C_CONTIGUOUS']:
             raise ValueError("out_arr must be C-contiguous")
         cdef float* ptr = <float*> arr.data
-        cdef PointCloudFetchResult result = getNextPcapFrame(ptr)
+        cdef PointCloudFetchResult result = self.cpp_driver.getNextPcapFrame(ptr)
         return result.success, result.dt_wait, result.dt_proc, result.timestamp
 
     def updateSnapshotDirectory(self, snapshot_dir):

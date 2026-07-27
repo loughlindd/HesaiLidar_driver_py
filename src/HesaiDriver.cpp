@@ -43,12 +43,13 @@ bool HesaiDriver::init(
             std::cout << "C++: Logging initialized. Redirecting logs to UDP " << log_server_ip << ":" << log_server_port << std::endl;
         }
 
-    // Reset global frame state so stale timestamps from a previous session don't
-    // trigger the connection-loss path in getLatestFrame before any frame arrives.
-    last_frame_time = 0;
-    last_frame_index_recv = 0;
-    last_frame_index_sent = 0;
-    pcap_parser_mode = pcap_parser_enabled;
+    // Reset this driver's frame state so stale timestamps from a previous session
+    // don't trigger the connection-loss path in getLatestFrame before any frame
+    // arrives. State is per-instance, so this never disturbs other drivers.
+    last_frame_time_ = 0;
+    last_frame_index_recv_ = 0;
+    last_frame_index_sent_ = 0;
+    pcap_parser_mode_ = pcap_parser_enabled;
     resetPcapFrameBuffer();
 
     // Stop and destroy the previous SDK instance before creating a fresh one.
@@ -150,8 +151,16 @@ bool HesaiDriver::init(
     // }
     // std::cout << "C++: Correction data loaded successfully." << std::endl;
 
+    // Bind the decoded-frame callback to THIS driver so frames land in this
+    // driver's own buffer (not a shared global). Safe because close()/Stop()
+    // tears the SDK down before the driver is destroyed, so no callback can fire
+    // on a dangling `this`. Fault/raw-packet callbacks are unchanged.
     hesai_sdk_->RegRecvCallback(faultMessageCallback);
-    hesai_sdk_->RegRecvCallback(lidarCallback);
+    hesai_sdk_->RegRecvCallback(
+        [this](const LidarDecodedFrame<LidarPointXYZICRT>& frame) {
+            this->lidarCallback(frame);
+        }
+    );
     hesai_sdk_->RegRecvCallback(
         [dir = std::ref(logging_dir_), snapdir = std::ref(snapshot_dir_)](const UdpFrame_t& udp_packets, double timestamp) {
             rawPacketCallback(udp_packets, timestamp, dir, snapdir);
@@ -220,23 +229,23 @@ bool HesaiDriver::start() {
 
 PointCloudFetchResult HesaiDriver::getLatestFrame(float* out_buf) {
     uint64_t now = nowtUTC();
-    if (last_frame_time != 0 && now - last_frame_time > 5) {
+    if (last_frame_time_ != 0 && now - last_frame_time_ > 5) {
         return {false, 0.0f, 0.0f, 0.0f};
     }
     PointCloudFetchResult result = returnLatestCloud(out_buf);
     return result;
 }
 
-PointCloudFetchResult getNextPcapFrame(float* out_buf) {
-    if (last_frame_index_sent >= pcap_frames.size()) {
+PointCloudFetchResult HesaiDriver::getNextPcapFrame(float* out_buf) {
+    if (last_frame_index_sent_ >= pcap_frames_.size()) {
         return {false, 0.0f, 0.0f, 0.0f};
     }
 
-    const StoredFrame& frame = pcap_frames[last_frame_index_sent];
+    const StoredFrame& frame = pcap_frames_[last_frame_index_sent_];
     std::memcpy(out_buf, frame.points.data(), frame.points.size() * sizeof(float));
-    last_frame_index_sent += 1;
+    last_frame_index_sent_ += 1;
 
-    float dt_tot = dt_frame + dt_logpcap;
+    float dt_tot = dt_frame_ + dt_logpcap;
     return {true, 0.0f, dt_tot, frame.timestamp};
 }
 

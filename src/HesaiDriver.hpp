@@ -10,6 +10,8 @@
 #include <csignal>
 #include <windows.h>
 #include <iostream>
+#include <vector>
+#include <cstdint>
 
 #include "hesai_lidar_sdk.hpp"
 
@@ -22,6 +24,15 @@ struct PointCloudFetchResult
     bool success;
     float dt_wait;
     float dt_proc;
+    double timestamp;
+};
+
+// One decoded frame buffered during pcap replay. Held per-driver (see
+// HesaiDriver::pcap_frames_) so several drivers can replay different pcap files
+// concurrently without sharing state.
+struct StoredFrame
+{
+    std::vector<float> points;
     double timestamp;
 };
 
@@ -61,12 +72,31 @@ public:
     );
     bool start();
     PointCloudFetchResult getLatestFrame(float* out_buf);
+    // Pop the next decoded frame from this driver's own pcap-replay buffer.
+    PointCloudFetchResult getNextPcapFrame(float* out_buf);
     bool periodicStatusThread();
     LidarStatus getStatus() const;
     void updateSnapshotDirectory(const std::string& snapshot_dir);
     void close();
 
 private:
+    // ---- Per-instance frame state (was file-scope globals in core.cpp) ----
+    // The decoded-frame callback is bound to `this`, so the buffer it fills and
+    // getNextPcapFrame() reads are per-driver. This is what lets several
+    // HesaiDriver instances replay different pcap files at once without colliding.
+    void lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>& frame);
+    PointCloudFetchResult returnLatestCloud(float* out_buf);
+    void resetPcapFrameBuffer();
+
+    float out_buf_cache_[230400 * 4] = {};   // 128 * 900 * 2 points * 4 floats
+    uint64_t last_frame_time_ = 0;
+    uint32_t last_frame_index_recv_ = 0;
+    float dt_frame_ = 0.0f;
+
+    bool pcap_parser_mode_ = false;
+    std::vector<StoredFrame> pcap_frames_;
+    uint32_t last_frame_index_sent_ = 0;
+
     // Parameters
     int lidar_type_;
     std::string host_address_;

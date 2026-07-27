@@ -1224,9 +1224,6 @@ static int __Pyx_init_co_variables(void) {
 #include "numpy/arrayscalars.h"
 #include "numpy/ufuncobject.h"
 #include "HesaiDriver.hpp"
-
-    PointCloudFetchResult getNextPcapFrame(float* out_buf);
-    
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -1871,8 +1868,8 @@ static CYTHON_INLINE __pyx_t_long_double_complex __pyx_t_long_double_complex_fro
 /*--- Type declarations ---*/
 struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver;
 
-/* "src/HesaiLidarDriverWrapper.pyx":56
- *     PointCloudFetchResult getNextPcapFrame(float* out_buf) except +
+/* "src/HesaiLidarDriverWrapper.pyx":51
+ *         void updateSnapshotDirectory(string snapshot_dir) except +
  * 
  * cdef class PyHesaiDriver:             # <<<<<<<<<<<<<<
  *     cdef HesaiDriver* cpp_driver
@@ -3002,7 +2999,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, int __pyx_v_lidar_type, PyObject *__pyx_v_lidar_address, PyObject *__pyx_v_host_address, int __pyx_v_scans_port, int __pyx_v_ptc_port, int __pyx_v_fault_message_port, PyObject *__pyx_v_logging_dir, PyObject *__pyx_v_log_server_ip, int __pyx_v_log_server_port, PyObject *__pyx_v_correction_data, PyObject *__pyx_v_pcap_parser_enabled, PyObject *__pyx_v_pcap_parser_file_path); /* proto */
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_6start(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatestFrame(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_out_arr); /* proto */
-static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextPcapFrame(CYTHON_UNUSED struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_out_arr); /* proto */
+static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextPcapFrame(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_out_arr); /* proto */
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_12updateSnapshotDirectory(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_snapshot_dir); /* proto */
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatus(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_16close(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self); /* proto */
@@ -3185,8 +3182,8 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_b_ __pyx_string_tab[90]
 #define __pyx_kp_b_iso88591_A_4_3a_oQ_WA_WT_gghhi_7_1_WAQ_WA __pyx_string_tab[91]
 #define __pyx_kp_b_iso88591_A_4_7_6_A_a __pyx_string_tab[92]
-#define __pyx_kp_b_iso88591_A_6a_4s_AQ_3a_AQ_vZvZvZvQ __pyx_string_tab[93]
-#define __pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_1_vZvZvZvQ __pyx_string_tab[94]
+#define __pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_1_vZvZvZvQ __pyx_string_tab[93]
+#define __pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_LAQ_vZvZvZvQ __pyx_string_tab[94]
 #define __pyx_kp_b_iso88591_A_T_Ja_AS_a_Qb_q_AT_q_ar_A_a_ar __pyx_string_tab[95]
 #define __pyx_kp_b_iso88591_A_t_fA __pyx_string_tab[96]
 #define __pyx_kp_b_iso88591_A_wa_PWWaaccjjkkl_K_q __pyx_string_tab[97]
@@ -5068,7 +5065,7 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":59
+/* "src/HesaiLidarDriverWrapper.pyx":54
  *     cdef HesaiDriver* cpp_driver
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -5108,7 +5105,7 @@ static int __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver___cinit__(struct
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":60
+  /* "src/HesaiLidarDriverWrapper.pyx":55
  * 
  *     def __cinit__(self):
  *         self.cpp_driver = new HesaiDriver()             # <<<<<<<<<<<<<<
@@ -5119,11 +5116,11 @@ static int __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver___cinit__(struct
     __pyx_t_1 = new HesaiDriver();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 60, __pyx_L1_error)
+    __PYX_ERR(0, 55, __pyx_L1_error)
   }
   __pyx_v_self->cpp_driver = __pyx_t_1;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":59
+  /* "src/HesaiLidarDriverWrapper.pyx":54
  *     cdef HesaiDriver* cpp_driver
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -5141,7 +5138,7 @@ static int __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver___cinit__(struct
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":62
+/* "src/HesaiLidarDriverWrapper.pyx":57
  *         self.cpp_driver = new HesaiDriver()
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -5165,7 +5162,7 @@ static void __pyx_pw_25HesaiLidar_driver_wrapper_13PyHesaiDriver_3__dealloc__(Py
 static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self) {
   int __pyx_t_1;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":63
+  /* "src/HesaiLidarDriverWrapper.pyx":58
  * 
  *     def __dealloc__(self):
  *         if self.cpp_driver is not NULL:             # <<<<<<<<<<<<<<
@@ -5175,7 +5172,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
   __pyx_t_1 = (__pyx_v_self->cpp_driver != NULL);
   if (__pyx_t_1) {
 
-    /* "src/HesaiLidarDriverWrapper.pyx":64
+    /* "src/HesaiLidarDriverWrapper.pyx":59
  *     def __dealloc__(self):
  *         if self.cpp_driver is not NULL:
  *             self.cpp_driver.close()             # <<<<<<<<<<<<<<
@@ -5184,7 +5181,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
 */
     __pyx_v_self->cpp_driver->close();
 
-    /* "src/HesaiLidarDriverWrapper.pyx":65
+    /* "src/HesaiLidarDriverWrapper.pyx":60
  *         if self.cpp_driver is not NULL:
  *             self.cpp_driver.close()
  *             del self.cpp_driver             # <<<<<<<<<<<<<<
@@ -5193,7 +5190,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
 */
     delete __pyx_v_self->cpp_driver;
 
-    /* "src/HesaiLidarDriverWrapper.pyx":66
+    /* "src/HesaiLidarDriverWrapper.pyx":61
  *             self.cpp_driver.close()
  *             del self.cpp_driver
  *             self.cpp_driver = NULL             # <<<<<<<<<<<<<<
@@ -5202,7 +5199,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
 */
     __pyx_v_self->cpp_driver = NULL;
 
-    /* "src/HesaiLidarDriverWrapper.pyx":63
+    /* "src/HesaiLidarDriverWrapper.pyx":58
  * 
  *     def __dealloc__(self):
  *         if self.cpp_driver is not NULL:             # <<<<<<<<<<<<<<
@@ -5211,7 +5208,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
 */
   }
 
-  /* "src/HesaiLidarDriverWrapper.pyx":62
+  /* "src/HesaiLidarDriverWrapper.pyx":57
  *         self.cpp_driver = new HesaiDriver()
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -5222,7 +5219,7 @@ static void __pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_2__dealloc__(st
   /* function exit code */
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":68
+/* "src/HesaiLidarDriverWrapper.pyx":63
  *             self.cpp_driver = NULL
  * 
  *     def init(             # <<<<<<<<<<<<<<
@@ -5280,109 +5277,109 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_lidar_type,&__pyx_mstate_global->__pyx_n_u_lidar_address,&__pyx_mstate_global->__pyx_n_u_host_address,&__pyx_mstate_global->__pyx_n_u_scans_port,&__pyx_mstate_global->__pyx_n_u_ptc_port,&__pyx_mstate_global->__pyx_n_u_fault_message_port,&__pyx_mstate_global->__pyx_n_u_logging_dir,&__pyx_mstate_global->__pyx_n_u_log_server_ip,&__pyx_mstate_global->__pyx_n_u_log_server_port,&__pyx_mstate_global->__pyx_n_u_correction_data,&__pyx_mstate_global->__pyx_n_u_pcap_parser_enabled,&__pyx_mstate_global->__pyx_n_u_pcap_parser_file_path,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 68, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 63, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case 12:
         values[11] = __Pyx_ArgRef_FASTCALL(__pyx_args, 11);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case 11:
         values[10] = __Pyx_ArgRef_FASTCALL(__pyx_args, 10);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case 10:
         values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  9:
         values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  8:
         values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  7:
         values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  6:
         values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  5:
         values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 63, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "init", 0) < (0)) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "init", 0) < (0)) __PYX_ERR(0, 63, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 12; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("init", 1, 12, 12, i); __PYX_ERR(0, 68, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("init", 1, 12, 12, i); __PYX_ERR(0, 63, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 12)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[10] = __Pyx_ArgRef_FASTCALL(__pyx_args, 10);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 63, __pyx_L3_error)
       values[11] = __Pyx_ArgRef_FASTCALL(__pyx_args, 11);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 68, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 63, __pyx_L3_error)
     }
-    __pyx_v_lidar_type = __Pyx_PyLong_As_int(values[0]); if (unlikely((__pyx_v_lidar_type == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
+    __pyx_v_lidar_type = __Pyx_PyLong_As_int(values[0]); if (unlikely((__pyx_v_lidar_type == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 65, __pyx_L3_error)
     __pyx_v_lidar_address = values[1];
     __pyx_v_host_address = values[2];
-    __pyx_v_scans_port = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_scans_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L3_error)
-    __pyx_v_ptc_port = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_ptc_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 74, __pyx_L3_error)
-    __pyx_v_fault_message_port = __Pyx_PyLong_As_int(values[5]); if (unlikely((__pyx_v_fault_message_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 75, __pyx_L3_error)
+    __pyx_v_scans_port = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_scans_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L3_error)
+    __pyx_v_ptc_port = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_ptc_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L3_error)
+    __pyx_v_fault_message_port = __Pyx_PyLong_As_int(values[5]); if (unlikely((__pyx_v_fault_message_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
     __pyx_v_logging_dir = values[6];
     __pyx_v_log_server_ip = values[7];
-    __pyx_v_log_server_port = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_log_server_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L3_error)
+    __pyx_v_log_server_port = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_log_server_port == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L3_error)
     __pyx_v_correction_data = values[9];
     __pyx_v_pcap_parser_enabled = values[10];
     __pyx_v_pcap_parser_file_path = values[11];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("init", 1, 12, 12, __pyx_nargs); __PYX_ERR(0, 68, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("init", 1, 12, 12, __pyx_nargs); __PYX_ERR(0, 63, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5427,7 +5424,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("init", 0);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":83
+  /* "src/HesaiLidarDriverWrapper.pyx":78
  *         pcap_parser_file_path
  *     ):
  *         if self.cpp_driver is NULL:             # <<<<<<<<<<<<<<
@@ -5437,7 +5434,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
   __pyx_t_1 = (__pyx_v_self->cpp_driver == NULL);
   if (__pyx_t_1) {
 
-    /* "src/HesaiLidarDriverWrapper.pyx":84
+    /* "src/HesaiLidarDriverWrapper.pyx":79
  *     ):
  *         if self.cpp_driver is NULL:
  *             self.cpp_driver = new HesaiDriver()             # <<<<<<<<<<<<<<
@@ -5448,11 +5445,11 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
       __pyx_t_2 = new HesaiDriver();
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 84, __pyx_L1_error)
+      __PYX_ERR(0, 79, __pyx_L1_error)
     }
     __pyx_v_self->cpp_driver = __pyx_t_2;
 
-    /* "src/HesaiLidarDriverWrapper.pyx":83
+    /* "src/HesaiLidarDriverWrapper.pyx":78
  *         pcap_parser_file_path
  *     ):
  *         if self.cpp_driver is NULL:             # <<<<<<<<<<<<<<
@@ -5461,7 +5458,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
 */
   }
 
-  /* "src/HesaiLidarDriverWrapper.pyx":85
+  /* "src/HesaiLidarDriverWrapper.pyx":80
  *         if self.cpp_driver is NULL:
  *             self.cpp_driver = new HesaiDriver()
  *         cdef string log_dir_cpp = logging_dir.encode('utf-8') if logging_dir is not None else "".encode("utf-8")             # <<<<<<<<<<<<<<
@@ -5471,6 +5468,122 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
   __pyx_t_1 = (__pyx_v_logging_dir != Py_None);
   if (__pyx_t_1) {
     __pyx_t_5 = __pyx_v_logging_dir;
+    __Pyx_INCREF(__pyx_t_5);
+    __pyx_t_6 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
+      __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+    }
+    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 80, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_3 = __pyx_t_7;
+  } else {
+    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_3 = __pyx_t_7;
+  }
+  __pyx_v_log_dir_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
+
+  /* "src/HesaiLidarDriverWrapper.pyx":81
+ *             self.cpp_driver = new HesaiDriver()
+ *         cdef string log_dir_cpp = logging_dir.encode('utf-8') if logging_dir is not None else "".encode("utf-8")
+ *         cdef string host_address_cpp = host_address.encode('utf-8')             # <<<<<<<<<<<<<<
+ *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
+ *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
+*/
+  __pyx_t_5 = __pyx_v_host_address;
+  __Pyx_INCREF(__pyx_t_5);
+  __pyx_t_6 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
+    __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+  }
+  __pyx_t_3 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_v_host_address_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
+
+  /* "src/HesaiLidarDriverWrapper.pyx":82
+ *         cdef string log_dir_cpp = logging_dir.encode('utf-8') if logging_dir is not None else "".encode("utf-8")
+ *         cdef string host_address_cpp = host_address.encode('utf-8')
+ *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')             # <<<<<<<<<<<<<<
+ *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
+ *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
+*/
+  __pyx_t_5 = __pyx_v_lidar_address;
+  __Pyx_INCREF(__pyx_t_5);
+  __pyx_t_6 = 0;
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
+    __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 82, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+  }
+  __pyx_t_3 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_v_lidar_address_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
+
+  /* "src/HesaiLidarDriverWrapper.pyx":83
+ *         cdef string host_address_cpp = host_address.encode('utf-8')
+ *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
+ *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")             # <<<<<<<<<<<<<<
+ *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
+ *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
+*/
+  __pyx_t_1 = (__pyx_v_log_server_ip != Py_None);
+  if (__pyx_t_1) {
+    __pyx_t_5 = __pyx_v_log_server_ip;
+    __Pyx_INCREF(__pyx_t_5);
+    __pyx_t_6 = 0;
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
+      __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
+      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+    }
+    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 83, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_3 = __pyx_t_7;
+  } else {
+    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 83, __pyx_L1_error)
+    __pyx_t_3 = __pyx_t_7;
+  }
+  __pyx_v_log_server_ip_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
+
+  /* "src/HesaiLidarDriverWrapper.pyx":84
+ *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
+ *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
+ *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0             # <<<<<<<<<<<<<<
+ *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
+ *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
+*/
+  __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_log_server_port); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = (__pyx_t_4 != Py_None);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (__pyx_t_1) {
+    __pyx_t_8 = __pyx_v_log_server_port;
+  } else {
+    __pyx_t_8 = 0;
+  }
+  __pyx_v_log_server_port_cpp = __pyx_t_8;
+
+  /* "src/HesaiLidarDriverWrapper.pyx":85
+ *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
+ *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
+ *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")             # <<<<<<<<<<<<<<
+ *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
+ *         cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')
+*/
+  __pyx_t_1 = (__pyx_v_correction_data != Py_None);
+  if (__pyx_t_1) {
+    __pyx_t_5 = __pyx_v_correction_data;
     __Pyx_INCREF(__pyx_t_5);
     __pyx_t_6 = 0;
     {
@@ -5487,135 +5600,19 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
     __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L1_error)
     __pyx_t_3 = __pyx_t_7;
   }
-  __pyx_v_log_dir_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
-
-  /* "src/HesaiLidarDriverWrapper.pyx":86
- *             self.cpp_driver = new HesaiDriver()
- *         cdef string log_dir_cpp = logging_dir.encode('utf-8') if logging_dir is not None else "".encode("utf-8")
- *         cdef string host_address_cpp = host_address.encode('utf-8')             # <<<<<<<<<<<<<<
- *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
- *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
-*/
-  __pyx_t_5 = __pyx_v_host_address;
-  __Pyx_INCREF(__pyx_t_5);
-  __pyx_t_6 = 0;
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
-    __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-  }
-  __pyx_t_3 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_host_address_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
-
-  /* "src/HesaiLidarDriverWrapper.pyx":87
- *         cdef string log_dir_cpp = logging_dir.encode('utf-8') if logging_dir is not None else "".encode("utf-8")
- *         cdef string host_address_cpp = host_address.encode('utf-8')
- *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')             # <<<<<<<<<<<<<<
- *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
- *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
-*/
-  __pyx_t_5 = __pyx_v_lidar_address;
-  __Pyx_INCREF(__pyx_t_5);
-  __pyx_t_6 = 0;
-  {
-    PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
-    __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 87, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-  }
-  __pyx_t_3 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 87, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_v_lidar_address_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
-
-  /* "src/HesaiLidarDriverWrapper.pyx":88
- *         cdef string host_address_cpp = host_address.encode('utf-8')
- *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
- *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")             # <<<<<<<<<<<<<<
- *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
- *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
-*/
-  __pyx_t_1 = (__pyx_v_log_server_ip != Py_None);
-  if (__pyx_t_1) {
-    __pyx_t_5 = __pyx_v_log_server_ip;
-    __Pyx_INCREF(__pyx_t_5);
-    __pyx_t_6 = 0;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
-      __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-    }
-    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 88, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_3 = __pyx_t_7;
-  } else {
-    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 88, __pyx_L1_error)
-    __pyx_t_3 = __pyx_t_7;
-  }
-  __pyx_v_log_server_ip_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
-
-  /* "src/HesaiLidarDriverWrapper.pyx":89
- *         cdef string lidar_address_cpp = lidar_address.encode('utf-8')
- *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
- *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0             # <<<<<<<<<<<<<<
- *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
- *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
-*/
-  __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_log_server_port); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 89, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = (__pyx_t_4 != Py_None);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (__pyx_t_1) {
-    __pyx_t_8 = __pyx_v_log_server_port;
-  } else {
-    __pyx_t_8 = 0;
-  }
-  __pyx_v_log_server_port_cpp = __pyx_t_8;
-
-  /* "src/HesaiLidarDriverWrapper.pyx":90
- *         cdef string log_server_ip_cpp = log_server_ip.encode('utf-8') if log_server_ip is not None else "".encode("utf-8")
- *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
- *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")             # <<<<<<<<<<<<<<
- *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
- *         cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')
-*/
-  __pyx_t_1 = (__pyx_v_correction_data != Py_None);
-  if (__pyx_t_1) {
-    __pyx_t_5 = __pyx_v_correction_data;
-    __Pyx_INCREF(__pyx_t_5);
-    __pyx_t_6 = 0;
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
-      __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-    }
-    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_3 = __pyx_t_7;
-  } else {
-    __pyx_t_7 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 90, __pyx_L1_error)
-    __pyx_t_3 = __pyx_t_7;
-  }
   __pyx_v_correction_data_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":91
+  /* "src/HesaiLidarDriverWrapper.pyx":86
  *         cdef int log_server_port_cpp = log_server_port if log_server_port is not None else 0
  *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
  *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled             # <<<<<<<<<<<<<<
  *         cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')
  *         return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)
 */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_pcap_parser_enabled); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_pcap_parser_enabled); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
   __pyx_v_pcap_parser_enabled_cpp = __pyx_t_1;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":92
+  /* "src/HesaiLidarDriverWrapper.pyx":87
  *         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
  *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
  *         cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')             # <<<<<<<<<<<<<<
@@ -5629,14 +5626,14 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
     PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_mstate_global->__pyx_kp_u_utf_8};
     __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_6, (2-__pyx_t_6) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 87, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
   }
-  __pyx_t_3 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_3 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_pcap_parser_file_path_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_3);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":93
+  /* "src/HesaiLidarDriverWrapper.pyx":88
  *         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
  *         cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')
  *         return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)             # <<<<<<<<<<<<<<
@@ -5648,15 +5645,15 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
     __pyx_t_1 = __pyx_v_self->cpp_driver->init(__pyx_v_lidar_type, __pyx_v_lidar_address_cpp, __pyx_v_host_address_cpp, __pyx_v_scans_port, __pyx_v_ptc_port, __pyx_v_fault_message_port, __pyx_v_log_dir_cpp, __pyx_v_log_server_ip_cpp, __pyx_v_log_server_port_cpp, __pyx_v_correction_data_cpp, __pyx_v_pcap_parser_enabled_cpp, __pyx_v_pcap_parser_file_path_cpp);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 93, __pyx_L1_error)
+    __PYX_ERR(0, 88, __pyx_L1_error)
   }
-  __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":68
+  /* "src/HesaiLidarDriverWrapper.pyx":63
  *             self.cpp_driver = NULL
  * 
  *     def init(             # <<<<<<<<<<<<<<
@@ -5676,7 +5673,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_4init(stru
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":95
+/* "src/HesaiLidarDriverWrapper.pyx":90
  *         return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
@@ -5735,7 +5732,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_6start(str
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("start", 0);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":96
+  /* "src/HesaiLidarDriverWrapper.pyx":91
  * 
  *     def start(self):
  *         return self.cpp_driver.start()             # <<<<<<<<<<<<<<
@@ -5743,13 +5740,13 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_6start(str
  *     def getLatestFrame(self, out_arr):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->cpp_driver->start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->cpp_driver->start()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":95
+  /* "src/HesaiLidarDriverWrapper.pyx":90
  *         return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
@@ -5768,7 +5765,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_6start(str
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":98
+/* "src/HesaiLidarDriverWrapper.pyx":93
  *         return self.cpp_driver.start()
  * 
  *     def getLatestFrame(self, out_arr):             # <<<<<<<<<<<<<<
@@ -5815,32 +5812,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_out_arr,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 98, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 93, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 98, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 93, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getLatestFrame", 0) < (0)) __PYX_ERR(0, 98, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getLatestFrame", 0) < (0)) __PYX_ERR(0, 93, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getLatestFrame", 1, 1, 1, i); __PYX_ERR(0, 98, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getLatestFrame", 1, 1, 1, i); __PYX_ERR(0, 93, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 98, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 93, __pyx_L3_error)
     }
     __pyx_v_out_arr = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("getLatestFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 98, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("getLatestFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 93, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5887,7 +5884,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   __pyx_pybuffernd_arr.data = NULL;
   __pyx_pybuffernd_arr.rcbuffer = &__pyx_pybuffer_arr;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":99
+  /* "src/HesaiLidarDriverWrapper.pyx":94
  * 
  *     def getLatestFrame(self, out_arr):
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr             # <<<<<<<<<<<<<<
@@ -5896,36 +5893,36 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
 */
   __pyx_t_1 = __pyx_v_out_arr;
   __Pyx_INCREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_mstate_global->__pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 99, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_mstate_global->__pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 94, __pyx_L1_error)
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_arr.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_1), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float32_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_arr = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_arr.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 99, __pyx_L1_error)
+      __PYX_ERR(0, 94, __pyx_L1_error)
     } else {__pyx_pybuffernd_arr.diminfo[0].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_arr.diminfo[0].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_arr.diminfo[1].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_arr.diminfo[1].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[1];
     }
   }
   __pyx_v_arr = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":100
+  /* "src/HesaiLidarDriverWrapper.pyx":95
  *     def getLatestFrame(self, out_arr):
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
  *             raise ValueError("out_arr must be C-contiguous")
  *         cdef float* ptr = <float*> arr.data
 */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_arr), __pyx_mstate_global->__pyx_n_u_flags); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_arr), __pyx_mstate_global->__pyx_n_u_flags); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_C_CONTIGUOUS); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_C_CONTIGUOUS); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_4 = (!__pyx_t_3);
   if (unlikely(__pyx_t_4)) {
 
-    /* "src/HesaiLidarDriverWrapper.pyx":101
+    /* "src/HesaiLidarDriverWrapper.pyx":96
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")             # <<<<<<<<<<<<<<
@@ -5938,14 +5935,14 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
       PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_mstate_global->__pyx_kp_u_out_arr_must_be_C_contiguous};
       __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 101, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 96, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 101, __pyx_L1_error)
+    __PYX_ERR(0, 96, __pyx_L1_error)
 
-    /* "src/HesaiLidarDriverWrapper.pyx":100
+    /* "src/HesaiLidarDriverWrapper.pyx":95
  *     def getLatestFrame(self, out_arr):
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
@@ -5954,7 +5951,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
 */
   }
 
-  /* "src/HesaiLidarDriverWrapper.pyx":102
+  /* "src/HesaiLidarDriverWrapper.pyx":97
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")
  *         cdef float* ptr = <float*> arr.data             # <<<<<<<<<<<<<<
@@ -5963,7 +5960,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
 */
   __pyx_v_ptr = ((float *)__pyx_f_5numpy_7ndarray_4data_data(((PyArrayObject *)__pyx_v_arr)));
 
-  /* "src/HesaiLidarDriverWrapper.pyx":103
+  /* "src/HesaiLidarDriverWrapper.pyx":98
  *             raise ValueError("out_arr must be C-contiguous")
  *         cdef float* ptr = <float*> arr.data
  *         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)             # <<<<<<<<<<<<<<
@@ -5974,11 +5971,11 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
     __pyx_t_6 = __pyx_v_self->cpp_driver->getLatestFrame(__pyx_v_ptr);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 103, __pyx_L1_error)
+    __PYX_ERR(0, 98, __pyx_L1_error)
   }
   __pyx_v_result = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_6);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":104
+  /* "src/HesaiLidarDriverWrapper.pyx":99
  *         cdef float* ptr = <float*> arr.data
  *         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp             # <<<<<<<<<<<<<<
@@ -5986,24 +5983,24 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
  *     def getNextPcapFrame(self, out_arr):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_result.success); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_result.success); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_result.dt_wait); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_result.dt_wait); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_result.dt_proc); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_result.dt_proc); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_result.timestamp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_result.timestamp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_9 = PyTuple_New(4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_9 = PyTuple_New(4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_GIVEREF(__pyx_t_2);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 104, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 99, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 104, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 99, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 2, __pyx_t_7) != (0)) __PYX_ERR(0, 104, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 2, __pyx_t_7) != (0)) __PYX_ERR(0, 99, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_8);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 3, __pyx_t_8) != (0)) __PYX_ERR(0, 104, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 3, __pyx_t_8) != (0)) __PYX_ERR(0, 99, __pyx_L1_error);
   __pyx_t_2 = 0;
   __pyx_t_1 = 0;
   __pyx_t_7 = 0;
@@ -6012,7 +6009,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   __pyx_t_9 = 0;
   goto __pyx_L0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":98
+  /* "src/HesaiLidarDriverWrapper.pyx":93
  *         return self.cpp_driver.start()
  * 
  *     def getLatestFrame(self, out_arr):             # <<<<<<<<<<<<<<
@@ -6045,7 +6042,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_8getLatest
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":106
+/* "src/HesaiLidarDriverWrapper.pyx":101
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
  *     def getNextPcapFrame(self, out_arr):             # <<<<<<<<<<<<<<
@@ -6092,32 +6089,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_out_arr,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 106, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 101, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 106, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 101, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getNextPcapFrame", 0) < (0)) __PYX_ERR(0, 106, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "getNextPcapFrame", 0) < (0)) __PYX_ERR(0, 101, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getNextPcapFrame", 1, 1, 1, i); __PYX_ERR(0, 106, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("getNextPcapFrame", 1, 1, 1, i); __PYX_ERR(0, 101, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 106, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 101, __pyx_L3_error)
     }
     __pyx_v_out_arr = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("getNextPcapFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 106, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("getNextPcapFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 101, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6138,7 +6135,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextPcapFrame(CYTHON_UNUSED struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_out_arr) {
+static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextPcapFrame(struct __pyx_obj_25HesaiLidar_driver_wrapper_PyHesaiDriver *__pyx_v_self, PyObject *__pyx_v_out_arr) {
   PyArrayObject *__pyx_v_arr = 0;
   float *__pyx_v_ptr;
   PointCloudFetchResult __pyx_v_result;
@@ -6164,7 +6161,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextP
   __pyx_pybuffernd_arr.data = NULL;
   __pyx_pybuffernd_arr.rcbuffer = &__pyx_pybuffer_arr;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":107
+  /* "src/HesaiLidarDriverWrapper.pyx":102
  * 
  *     def getNextPcapFrame(self, out_arr):
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr             # <<<<<<<<<<<<<<
@@ -6173,41 +6170,41 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextP
 */
   __pyx_t_1 = __pyx_v_out_arr;
   __Pyx_INCREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_mstate_global->__pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_mstate_global->__pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 102, __pyx_L1_error)
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_arr.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_1), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float32_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
       __pyx_v_arr = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_arr.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 107, __pyx_L1_error)
+      __PYX_ERR(0, 102, __pyx_L1_error)
     } else {__pyx_pybuffernd_arr.diminfo[0].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_arr.diminfo[0].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_arr.diminfo[1].strides = __pyx_pybuffernd_arr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_arr.diminfo[1].shape = __pyx_pybuffernd_arr.rcbuffer->pybuffer.shape[1];
     }
   }
   __pyx_v_arr = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":108
+  /* "src/HesaiLidarDriverWrapper.pyx":103
  *     def getNextPcapFrame(self, out_arr):
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
  *             raise ValueError("out_arr must be C-contiguous")
  *         cdef float* ptr = <float*> arr.data
 */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_arr), __pyx_mstate_global->__pyx_n_u_flags); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_arr), __pyx_mstate_global->__pyx_n_u_flags); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_C_CONTIGUOUS); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Dict_GetItem(__pyx_t_1, __pyx_mstate_global->__pyx_n_u_C_CONTIGUOUS); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_4 = (!__pyx_t_3);
   if (unlikely(__pyx_t_4)) {
 
-    /* "src/HesaiLidarDriverWrapper.pyx":109
+    /* "src/HesaiLidarDriverWrapper.pyx":104
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")             # <<<<<<<<<<<<<<
  *         cdef float* ptr = <float*> arr.data
- *         cdef PointCloudFetchResult result = getNextPcapFrame(ptr)
+ *         cdef PointCloudFetchResult result = self.cpp_driver.getNextPcapFrame(ptr)
 */
     __pyx_t_1 = NULL;
     __pyx_t_5 = 1;
@@ -6215,14 +6212,14 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextP
       PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_mstate_global->__pyx_kp_u_out_arr_must_be_C_contiguous};
       __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 109, __pyx_L1_error)
+    __PYX_ERR(0, 104, __pyx_L1_error)
 
-    /* "src/HesaiLidarDriverWrapper.pyx":108
+    /* "src/HesaiLidarDriverWrapper.pyx":103
  *     def getNextPcapFrame(self, out_arr):
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:             # <<<<<<<<<<<<<<
@@ -6231,56 +6228,56 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextP
 */
   }
 
-  /* "src/HesaiLidarDriverWrapper.pyx":110
+  /* "src/HesaiLidarDriverWrapper.pyx":105
  *         if not arr.flags['C_CONTIGUOUS']:
  *             raise ValueError("out_arr must be C-contiguous")
  *         cdef float* ptr = <float*> arr.data             # <<<<<<<<<<<<<<
- *         cdef PointCloudFetchResult result = getNextPcapFrame(ptr)
+ *         cdef PointCloudFetchResult result = self.cpp_driver.getNextPcapFrame(ptr)
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
 */
   __pyx_v_ptr = ((float *)__pyx_f_5numpy_7ndarray_4data_data(((PyArrayObject *)__pyx_v_arr)));
 
-  /* "src/HesaiLidarDriverWrapper.pyx":111
+  /* "src/HesaiLidarDriverWrapper.pyx":106
  *             raise ValueError("out_arr must be C-contiguous")
  *         cdef float* ptr = <float*> arr.data
- *         cdef PointCloudFetchResult result = getNextPcapFrame(ptr)             # <<<<<<<<<<<<<<
+ *         cdef PointCloudFetchResult result = self.cpp_driver.getNextPcapFrame(ptr)             # <<<<<<<<<<<<<<
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
 */
   try {
-    __pyx_t_6 = getNextPcapFrame(__pyx_v_ptr);
+    __pyx_t_6 = __pyx_v_self->cpp_driver->getNextPcapFrame(__pyx_v_ptr);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 111, __pyx_L1_error)
+    __PYX_ERR(0, 106, __pyx_L1_error)
   }
   __pyx_v_result = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_6);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":112
+  /* "src/HesaiLidarDriverWrapper.pyx":107
  *         cdef float* ptr = <float*> arr.data
- *         cdef PointCloudFetchResult result = getNextPcapFrame(ptr)
+ *         cdef PointCloudFetchResult result = self.cpp_driver.getNextPcapFrame(ptr)
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp             # <<<<<<<<<<<<<<
  * 
  *     def updateSnapshotDirectory(self, snapshot_dir):
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_result.success); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_result.success); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_result.dt_wait); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_result.dt_wait); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_result.dt_proc); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_result.dt_proc); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_result.timestamp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_8 = PyFloat_FromDouble(__pyx_v_result.timestamp); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_9 = PyTuple_New(4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_9 = PyTuple_New(4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_GIVEREF(__pyx_t_2);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 112, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2) != (0)) __PYX_ERR(0, 107, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 112, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 107, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 2, __pyx_t_7) != (0)) __PYX_ERR(0, 112, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 2, __pyx_t_7) != (0)) __PYX_ERR(0, 107, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_8);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 3, __pyx_t_8) != (0)) __PYX_ERR(0, 112, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 3, __pyx_t_8) != (0)) __PYX_ERR(0, 107, __pyx_L1_error);
   __pyx_t_2 = 0;
   __pyx_t_1 = 0;
   __pyx_t_7 = 0;
@@ -6289,7 +6286,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextP
   __pyx_t_9 = 0;
   goto __pyx_L0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":106
+  /* "src/HesaiLidarDriverWrapper.pyx":101
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
  *     def getNextPcapFrame(self, out_arr):             # <<<<<<<<<<<<<<
@@ -6322,7 +6319,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_10getNextP
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":114
+/* "src/HesaiLidarDriverWrapper.pyx":109
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
  *     def updateSnapshotDirectory(self, snapshot_dir):             # <<<<<<<<<<<<<<
@@ -6369,32 +6366,32 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_snapshot_dir,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 114, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 109, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 114, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 109, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "updateSnapshotDirectory", 0) < (0)) __PYX_ERR(0, 114, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "updateSnapshotDirectory", 0) < (0)) __PYX_ERR(0, 109, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 1; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("updateSnapshotDirectory", 1, 1, 1, i); __PYX_ERR(0, 114, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("updateSnapshotDirectory", 1, 1, 1, i); __PYX_ERR(0, 109, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 114, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 109, __pyx_L3_error)
     }
     __pyx_v_snapshot_dir = values[0];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("updateSnapshotDirectory", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 114, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("updateSnapshotDirectory", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 109, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6430,7 +6427,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_12updateSn
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("updateSnapshotDirectory", 0);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":115
+  /* "src/HesaiLidarDriverWrapper.pyx":110
  * 
  *     def updateSnapshotDirectory(self, snapshot_dir):
  *         cdef string snap_dir_cpp = snapshot_dir.encode('utf-8') if snapshot_dir is not None else "".encode("utf-8")             # <<<<<<<<<<<<<<
@@ -6446,19 +6443,19 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_12updateSn
       PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_utf_8};
       __pyx_t_3 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_encode, __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
-    __pyx_t_6 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_3); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_6 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_t_3); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_1 = __pyx_t_6;
   } else {
-    __pyx_t_6 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_6 = __pyx_convert_string_from_py_6libcpp_6string_std__in_string(__pyx_mstate_global->__pyx_kp_b_); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
     __pyx_t_1 = __pyx_t_6;
   }
   __pyx_v_snap_dir_cpp = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_1);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":116
+  /* "src/HesaiLidarDriverWrapper.pyx":111
  *     def updateSnapshotDirectory(self, snapshot_dir):
  *         cdef string snap_dir_cpp = snapshot_dir.encode('utf-8') if snapshot_dir is not None else "".encode("utf-8")
  *         self.cpp_driver.updateSnapshotDirectory(snap_dir_cpp)             # <<<<<<<<<<<<<<
@@ -6469,10 +6466,10 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_12updateSn
     __pyx_v_self->cpp_driver->updateSnapshotDirectory(__pyx_v_snap_dir_cpp);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 116, __pyx_L1_error)
+    __PYX_ERR(0, 111, __pyx_L1_error)
   }
 
-  /* "src/HesaiLidarDriverWrapper.pyx":114
+  /* "src/HesaiLidarDriverWrapper.pyx":109
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
  *     def updateSnapshotDirectory(self, snapshot_dir):             # <<<<<<<<<<<<<<
@@ -6494,7 +6491,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_12updateSn
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":118
+/* "src/HesaiLidarDriverWrapper.pyx":113
  *         self.cpp_driver.updateSnapshotDirectory(snap_dir_cpp)
  * 
  *     def getStatus(self):             # <<<<<<<<<<<<<<
@@ -6563,7 +6560,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("getStatus", 0);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":123
+  /* "src/HesaiLidarDriverWrapper.pyx":118
  *         (temperature: float, voltage: float, sn: str, mac: str, top_fw_ver: str, bottom_fw_ver: str, state: bool)
  *         """
  *         cdef LidarStatus s = self.cpp_driver.getStatus()             # <<<<<<<<<<<<<<
@@ -6572,7 +6569,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
 */
   __pyx_v_s = __pyx_v_self->cpp_driver->getStatus();
 
-  /* "src/HesaiLidarDriverWrapper.pyx":127
+  /* "src/HesaiLidarDriverWrapper.pyx":122
  *         cdef const char* p
  * 
  *         p = s.sn.c_str()             # <<<<<<<<<<<<<<
@@ -6581,7 +6578,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
 */
   __pyx_v_p = __pyx_v_s.sn.c_str();
 
-  /* "src/HesaiLidarDriverWrapper.pyx":128
+  /* "src/HesaiLidarDriverWrapper.pyx":123
  * 
  *         p = s.sn.c_str()
  *         py_sn = bytes(p).decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
@@ -6589,7 +6586,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
  *         p = s.mac.c_str()
 */
   __pyx_t_2 = NULL;
-  __pyx_t_3 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = 1;
   {
@@ -6597,16 +6594,16 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
     __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
-  __pyx_t_3 = __Pyx_decode_bytes(__pyx_t_1, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_decode_bytes(__pyx_t_1, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_py_sn = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":130
+  /* "src/HesaiLidarDriverWrapper.pyx":125
  *         py_sn = bytes(p).decode('utf-8', 'ignore')
  * 
  *         p = s.mac.c_str()             # <<<<<<<<<<<<<<
@@ -6615,7 +6612,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
 */
   __pyx_v_p = __pyx_v_s.mac.c_str();
 
-  /* "src/HesaiLidarDriverWrapper.pyx":131
+  /* "src/HesaiLidarDriverWrapper.pyx":126
  * 
  *         p = s.mac.c_str()
  *         py_mac = bytes(p).decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
@@ -6623,7 +6620,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
  *         p = s.top_fw_ver.c_str()
 */
   __pyx_t_1 = NULL;
-  __pyx_t_2 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = 1;
   {
@@ -6631,16 +6628,16 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
     __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   }
-  __pyx_t_2 = __Pyx_decode_bytes(__pyx_t_3, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_decode_bytes(__pyx_t_3, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_py_mac = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":133
+  /* "src/HesaiLidarDriverWrapper.pyx":128
  *         py_mac = bytes(p).decode('utf-8', 'ignore')
  * 
  *         p = s.top_fw_ver.c_str()             # <<<<<<<<<<<<<<
@@ -6649,7 +6646,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
 */
   __pyx_v_p = __pyx_v_s.top_fw_ver.c_str();
 
-  /* "src/HesaiLidarDriverWrapper.pyx":134
+  /* "src/HesaiLidarDriverWrapper.pyx":129
  * 
  *         p = s.top_fw_ver.c_str()
  *         py_top = bytes(p).decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
@@ -6657,7 +6654,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
  *         p = s.bottom_fw_ver.c_str()
 */
   __pyx_t_3 = NULL;
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_4 = 1;
   {
@@ -6665,16 +6662,16 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
     __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   }
-  __pyx_t_1 = __Pyx_decode_bytes(__pyx_t_2, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_decode_bytes(__pyx_t_2, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_py_top = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":136
+  /* "src/HesaiLidarDriverWrapper.pyx":131
  *         py_top = bytes(p).decode('utf-8', 'ignore')
  * 
  *         p = s.bottom_fw_ver.c_str()             # <<<<<<<<<<<<<<
@@ -6683,7 +6680,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
 */
   __pyx_v_p = __pyx_v_s.bottom_fw_ver.c_str();
 
-  /* "src/HesaiLidarDriverWrapper.pyx":137
+  /* "src/HesaiLidarDriverWrapper.pyx":132
  * 
  *         p = s.bottom_fw_ver.c_str()
  *         py_bottom = bytes(p).decode('utf-8', 'ignore')             # <<<<<<<<<<<<<<
@@ -6691,7 +6688,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
  *         return (float(s.temperature),
 */
   __pyx_t_2 = NULL;
-  __pyx_t_3 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyBytes_FromString(__pyx_v_p); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = 1;
   {
@@ -6699,16 +6696,16 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
     __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
-  __pyx_t_3 = __Pyx_decode_bytes(__pyx_t_1, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_decode_bytes(__pyx_t_1, 0, PY_SSIZE_T_MAX, NULL, __pyx_k_ignore, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_py_bottom = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":139
+  /* "src/HesaiLidarDriverWrapper.pyx":134
  *         py_bottom = bytes(p).decode('utf-8', 'ignore')
  * 
  *         return (float(s.temperature),             # <<<<<<<<<<<<<<
@@ -6716,51 +6713,51 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
  *                 py_sn,
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble(((double)__pyx_v_s.temperature)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(((double)__pyx_v_s.temperature)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":140
+  /* "src/HesaiLidarDriverWrapper.pyx":135
  * 
  *         return (float(s.temperature),
  *                 float(s.voltage),             # <<<<<<<<<<<<<<
  *                 py_sn,
  *                 py_mac,
 */
-  __pyx_t_1 = PyFloat_FromDouble(((double)__pyx_v_s.voltage)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 140, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(((double)__pyx_v_s.voltage)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":139
+  /* "src/HesaiLidarDriverWrapper.pyx":134
  *         py_bottom = bytes(p).decode('utf-8', 'ignore')
  * 
  *         return (float(s.temperature),             # <<<<<<<<<<<<<<
  *                 float(s.voltage),
  *                 py_sn,
 */
-  __pyx_t_2 = PyTuple_New(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 134, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_3);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3) != (0)) __PYX_ERR(0, 139, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3) != (0)) __PYX_ERR(0, 134, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 139, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1) != (0)) __PYX_ERR(0, 134, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_py_sn);
   __Pyx_GIVEREF(__pyx_v_py_sn);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_v_py_sn) != (0)) __PYX_ERR(0, 139, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_v_py_sn) != (0)) __PYX_ERR(0, 134, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_py_mac);
   __Pyx_GIVEREF(__pyx_v_py_mac);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_py_mac) != (0)) __PYX_ERR(0, 139, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 3, __pyx_v_py_mac) != (0)) __PYX_ERR(0, 134, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_py_top);
   __Pyx_GIVEREF(__pyx_v_py_top);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_v_py_top) != (0)) __PYX_ERR(0, 139, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_v_py_top) != (0)) __PYX_ERR(0, 134, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_py_bottom);
   __Pyx_GIVEREF(__pyx_v_py_bottom);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 5, __pyx_v_py_bottom) != (0)) __PYX_ERR(0, 139, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 5, __pyx_v_py_bottom) != (0)) __PYX_ERR(0, 134, __pyx_L1_error);
   __pyx_t_3 = 0;
   __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":118
+  /* "src/HesaiLidarDriverWrapper.pyx":113
  *         self.cpp_driver.updateSnapshotDirectory(snap_dir_cpp)
  * 
  *     def getStatus(self):             # <<<<<<<<<<<<<<
@@ -6785,7 +6782,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_14getStatu
   return __pyx_r;
 }
 
-/* "src/HesaiLidarDriverWrapper.pyx":146
+/* "src/HesaiLidarDriverWrapper.pyx":141
  *                 py_bottom)
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -6841,7 +6838,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_16close(st
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("close", 0);
 
-  /* "src/HesaiLidarDriverWrapper.pyx":147
+  /* "src/HesaiLidarDriverWrapper.pyx":142
  * 
  *     def close(self):
  *         if self.cpp_driver is not NULL:             # <<<<<<<<<<<<<<
@@ -6851,7 +6848,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_16close(st
   __pyx_t_1 = (__pyx_v_self->cpp_driver != NULL);
   if (__pyx_t_1) {
 
-    /* "src/HesaiLidarDriverWrapper.pyx":148
+    /* "src/HesaiLidarDriverWrapper.pyx":143
  *     def close(self):
  *         if self.cpp_driver is not NULL:
  *             self.cpp_driver.close()             # <<<<<<<<<<<<<<
@@ -6860,7 +6857,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_16close(st
 */
     __pyx_v_self->cpp_driver->close();
 
-    /* "src/HesaiLidarDriverWrapper.pyx":149
+    /* "src/HesaiLidarDriverWrapper.pyx":144
  *         if self.cpp_driver is not NULL:
  *             self.cpp_driver.close()
  *             del self.cpp_driver             # <<<<<<<<<<<<<<
@@ -6868,14 +6865,14 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_16close(st
 */
     delete __pyx_v_self->cpp_driver;
 
-    /* "src/HesaiLidarDriverWrapper.pyx":150
+    /* "src/HesaiLidarDriverWrapper.pyx":145
  *             self.cpp_driver.close()
  *             del self.cpp_driver
  *             self.cpp_driver = NULL             # <<<<<<<<<<<<<<
 */
     __pyx_v_self->cpp_driver = NULL;
 
-    /* "src/HesaiLidarDriverWrapper.pyx":147
+    /* "src/HesaiLidarDriverWrapper.pyx":142
  * 
  *     def close(self):
  *         if self.cpp_driver is not NULL:             # <<<<<<<<<<<<<<
@@ -6884,7 +6881,7 @@ static PyObject *__pyx_pf_25HesaiLidar_driver_wrapper_13PyHesaiDriver_16close(st
 */
   }
 
-  /* "src/HesaiLidarDriverWrapper.pyx":146
+  /* "src/HesaiLidarDriverWrapper.pyx":141
  *                 py_bottom)
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
@@ -7300,15 +7297,15 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_25HesaiLidar_driver_wrapper_PyHesaiDriver_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver)) __PYX_ERR(0, 56, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_25HesaiLidar_driver_wrapper_PyHesaiDriver_spec, __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_25HesaiLidar_driver_wrapper_PyHesaiDriver_spec, NULL); if (unlikely(!__pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver)) __PYX_ERR(0, 51, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_25HesaiLidar_driver_wrapper_PyHesaiDriver_spec, __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 51, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver = &__pyx_type_25HesaiLidar_driver_wrapper_PyHesaiDriver;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 56, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 51, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver);
@@ -7318,8 +7315,8 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver, (PyObject *) __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 56, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 56, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver, (PyObject *) __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 51, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_mstate->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver) < (0)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7791,109 +7788,109 @@ __Pyx_RefNannySetupContext("PyInit_HesaiLidar_driver_wrapper", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_np, __pyx_t_2) < (0)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":68
+  /* "src/HesaiLidarDriverWrapper.pyx":63
  *             self.cpp_driver = NULL
  * 
  *     def init(             # <<<<<<<<<<<<<<
  *         self,
  *         int lidar_type,
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_5init, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_init, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_5init, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_init, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_init, __pyx_t_2) < (0)) __PYX_ERR(0, 68, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_init, __pyx_t_2) < (0)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":95
+  /* "src/HesaiLidarDriverWrapper.pyx":90
  *         return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
  *         return self.cpp_driver.start()
  * 
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_7start, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_start, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_7start, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_start, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_start, __pyx_t_2) < (0)) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_start, __pyx_t_2) < (0)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":98
+  /* "src/HesaiLidarDriverWrapper.pyx":93
  *         return self.cpp_driver.start()
  * 
  *     def getLatestFrame(self, out_arr):             # <<<<<<<<<<<<<<
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_9getLatestFrame, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getLatestFrame, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_9getLatestFrame, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getLatestFrame, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_getLatestFrame, __pyx_t_2) < (0)) __PYX_ERR(0, 98, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_getLatestFrame, __pyx_t_2) < (0)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":106
+  /* "src/HesaiLidarDriverWrapper.pyx":101
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
  *     def getNextPcapFrame(self, out_arr):             # <<<<<<<<<<<<<<
  *         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
  *         if not arr.flags['C_CONTIGUOUS']:
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_11getNextPcapFrame, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getNextPcapFrame, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_11getNextPcapFrame, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getNextPcapFrame, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_getNextPcapFrame, __pyx_t_2) < (0)) __PYX_ERR(0, 106, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_getNextPcapFrame, __pyx_t_2) < (0)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":114
+  /* "src/HesaiLidarDriverWrapper.pyx":109
  *         return result.success, result.dt_wait, result.dt_proc, result.timestamp
  * 
  *     def updateSnapshotDirectory(self, snapshot_dir):             # <<<<<<<<<<<<<<
  *         cdef string snap_dir_cpp = snapshot_dir.encode('utf-8') if snapshot_dir is not None else "".encode("utf-8")
  *         self.cpp_driver.updateSnapshotDirectory(snap_dir_cpp)
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_13updateSnapshotDirectory, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_updateSnapshotDire, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_13updateSnapshotDirectory, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_updateSnapshotDire, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_updateSnapshotDirectory, __pyx_t_2) < (0)) __PYX_ERR(0, 114, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_updateSnapshotDirectory, __pyx_t_2) < (0)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":118
+  /* "src/HesaiLidarDriverWrapper.pyx":113
  *         self.cpp_driver.updateSnapshotDirectory(snap_dir_cpp)
  * 
  *     def getStatus(self):             # <<<<<<<<<<<<<<
  *         """
  *         Return status as a Python tuple:
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_15getStatus, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getStatus, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_15getStatus, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_getStatus, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_getStatus, __pyx_t_2) < (0)) __PYX_ERR(0, 118, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_getStatus, __pyx_t_2) < (0)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "src/HesaiLidarDriverWrapper.pyx":146
+  /* "src/HesaiLidarDriverWrapper.pyx":141
  *                 py_bottom)
  * 
  *     def close(self):             # <<<<<<<<<<<<<<
  *         if self.cpp_driver is not NULL:
  *             self.cpp_driver.close()
 */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_17close, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_close, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_25HesaiLidar_driver_wrapper_13PyHesaiDriver_17close, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_PyHesaiDriver_close, NULL, __pyx_mstate_global->__pyx_n_u_HesaiLidar_driver_wrapper, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 141, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_2);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_close, __pyx_t_2) < (0)) __PYX_ERR(0, 146, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_25HesaiLidar_driver_wrapper_PyHesaiDriver, __pyx_mstate_global->__pyx_n_u_close, __pyx_t_2) < (0)) __PYX_ERR(0, 141, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "(tree fragment)":1
@@ -7993,25 +7990,25 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 8; } index[] = {{1},{7},{6},{2},{9},{50},{39},{34},{28},{31},{14},{5},{12},{25},{13},{31},{33},{19},{28},{30},{23},{18},{19},{37},{20},{3},{18},{18},{5},{15},{19},{6},{18},{5},{8},{14},{16},{9},{12},{12},{16},{4},{13},{5},{13},{17},{10},{11},{13},{17},{15},{19},{11},{8},{10},{8},{2},{5},{7},{1},{19},{23},{21},{25},{3},{8},{3},{9},{6},{5},{6},{11},{12},{10},{17},{13},{6},{1},{10},{4},{12},{10},{12},{19},{12},{12},{5},{8},{23},{6},{0},{243},{36},{67},{70},{161},{13},{45},{9}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1206 bytes) */
-const char* const cstring = "BZh91AY&SY\307Mh\002\000\000{\377\377\377\377\367\275y\377\355\337\357\377\376\237\377\377\377\344\300@@@@@@@@@@@@\000@\000P\004\014\333hkJR\226\014%$!3!\251\350\240\362`\325<Pb\032\006\203M4\321\3522z\2004z\215\251\210\362\230\217P\375S\312zf*oR\tMHLLL\3256\251\372\247\344(\323C@\000\003 \000\000\000\000\000\001\2404\000%\021\240\247\242d\321=\032\224\331\252~\224\375Q\275$\033P0@\000\000\000\r\000\006\203\321\036\231M=G\250p\000\000\000\000\000\000\0004\000\000\000\000\000\000\000\000p\000\000\000\000\000\000\0004\000\000\000\000\000\000\000\001\310%)M0\206\320\212\177!\224\207'\363[\317uJ^\336\356\362\313E\0004N]9\021H)H\201\221-l6\222yd&\343\002\362\220\036\014\207v\341S[\214u\n=%\002\017\222sD\377\246D\\\013+\346\374\370y\017\353O/\013\316E\334'm,\274\272\3431\231\304Ta\207\177\243\275\003hv\276\364\217\025H)BY{\332\246&\234\251\357\200\250\034D-7.N5g\034\235\232\216o\314\261\036hL&FF\364\021\305\023\024k\324s\335\351\316t\306!I\226c\306}J\275\233$C\336\354~\271\364uq\374\333x\313\211JY\277H\227\354\375\240\303gSJ\177\2143a\035C\223wN\006\323\224\263\3168\303\355\231\322z\237\013\321T\331\205T\373\236XDIF\252\014:\021p\021{'\306\326g\331\276\364\0148\016\361\3429\350\253\263w\242\257\333\\\\\367G\257W\210\321j9&\252\245u\300\253\211H\327/\033\307j\202\243\214\224\240\220R\240s\207\326\316\024\200@\202\256J\240\204\301P\235\256u$\365\331\263Gn\311%K.6\356J\201.\262\202g!\017\007\320\345\250\255\024\314\216Pp\344\320\205t\233\263\205\204\242\016C\210\307\001\344\322>\026\300\357\265p8{o\212\372n\326A\271\024\255\265>m\014\361\300\215A\006Y\314w9\2115\341\217\251\230\214Gqt\005\251.\013\203\362=\031\006, \031\256\363 \0343\265t\2039\tG\271\257j\363z\375E\203\365\275\317\034\223\234\222\262\022\330/F\020\260\230Z53\245$\275]\367\300\237\016\255\231&J\020T\0248\301%Y\211LH\266\332$\221T\253\250\233\322\262\362\320\210\313\n\357B\030s\242\257Usa\2162\356\275\232\210\212\026\342Tt\367\361\002^\334]\014\242\253\372\004L\302\325\010\213\366a\311\211DFcj\004\345\rmd\2546""\316\262''\037\252G\343\2642\330\277h\372M\236\\\243\023B\035\355\303\336\210\356}C\033\213K\360d\202\202\260a)\331\345\013N\214\246\006\025NW\331\215\262\345\236\017Jf\336\312#C\000\211\026\233\204TG\021 \206|\031Qe\\j\036>\2070\361\237\202\2051}\314F\232\245\033<D\360>a0\344\323\275\036Y\226d\226X\235\242\217\213\262u\271\335\372S\001\013\02528Q\\\002\255\234\201\301\376\310\303=\343\312\026\356\252\233`\352\265\"\017t\211:\304x\250O3\207\242Z\nd?\224jT\224\2269\322\003%!43\205 U\036&WC\002\236\033\355*'\023L]T\t\251\333\215\313\324#\252\252\n@:E\321s\315-(E,\0358BT$\211\254\271\231\022*[J<\324\013K\340c\"kL\270\230a\326xv5,\014\230\311\3454t\266\362\r*\215\261`\272\266\326\343\202\214\025\212Dh\242\333\231\212\301\030L\3234\337\223fAt\245\005)\030\257\312\214vQ\tk\007-NS\006\027\214\247[4\364\364nv\367\237\326mM\374w\r\245n\254\022\003\031\365\005\027\023IH\321i\222\361D\333\277\213~\361\256O\027/\255\301\314\007\217]\250)\226I\370\010\274\325V\306a\252`\375N\311\000\273\334g\340\362@N,C2\367v\001\375\210K\003\207\356\023\016R\216\021\373ou\036\242m\321\371\327\334\325'\026vk\031z\322\353C\2375\242R6Y\213\237\232\331\244\306\006\345\262\317\372'i\360\361qa\221\024\211X\273Kjb\356\017U.}\257\274<{\316\013\2726\264.\331\226T\341\266\262\273\314IV\303$?\017\202M\277\366L\222Oc\236\364(+\022\346\353\366\005YL\377\305\334\221N\024$1\323Z\000\200";
-    PyObject *data = __Pyx_DecompressString(cstring, 1206, 2);
+    const struct { const unsigned int length: 8; } index[] = {{1},{7},{6},{2},{9},{50},{39},{34},{28},{31},{14},{5},{12},{25},{13},{31},{33},{19},{28},{30},{23},{18},{19},{37},{20},{3},{18},{18},{5},{15},{19},{6},{18},{5},{8},{14},{16},{9},{12},{12},{16},{4},{13},{5},{13},{17},{10},{11},{13},{17},{15},{19},{11},{8},{10},{8},{2},{5},{7},{1},{19},{23},{21},{25},{3},{8},{3},{9},{6},{5},{6},{11},{12},{10},{17},{13},{6},{1},{10},{4},{12},{10},{12},{19},{12},{12},{5},{8},{23},{6},{0},{243},{36},{70},{71},{161},{13},{45},{9}};
+    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1223 bytes) */
+const char* const cstring = "BZh91AY&SYa5[G\000\000{\377\377\377\377\367\275y\377\355\337\357\377\376\237\377\377\377\344\300@@@@@@@@@@@@\000@\000P\004\013\323\\7c\244\252\352\030JHSd\236!OeM\251\371L\230\246z\246\217P4\032\007\250\003\324\017P\000\321\3454\036S&\236\246\237\250\324x5G\352A(\223)\2002SMO\t\251\3456\2404\0002\000\000\000\003@\000\0004\003C@J\020\024\3052\237\244\236OR\03224y!\210\006\200\000\000\000\000\000\000\014@\003\200\000\000\000\000\000\000\001\240\000\000\000\000\000\000\000\001\252'\224\323Hl\232jz \323\t\223\0101\014@h\000\006\004\310\014L\215\031\031\240\207\2504\323\200Jy\3560\207\260Ee\306d$\307\275\332\362]R\227\267\362\371\254\264\271\201\301\345\323\201\024\202\224\210\017J\333v\332Ia\030\231\215\005\376\016\"\006\241\211\202\246F\024\316)\022F\341\32103\001\303\370\360p7\030!\211\203\321U\205\347\037\252\220,kpz8H(\022H&\023\\\0164\024\024g\3726&\226\217\342\262\002\275B\265\025qh=\344\364\017\204\"\036\014\034.\036l\234\205\266jK\206\036\232r:\240\244\245\305frAJT\343a\177c\247\177\031\366\020\3019=\247i\252\371\2414C\323\370\301\241K\246\357\302\007N\021q\246\232\177q\223CW\363\234\300\305%\025RF\006\030\202eqd\322.\226\361,\264P0\267\356\235\222z\340\330(\371\363G\327\357\201pq%:\330\262\264\235\302R\326\037\225\324J\357\341r\005\231\346\301\3023\221W\016Fr\273\035m`h\370i\333\276/\241\222j\252UT\ntT\215R\334\356\237HRi\222\224\022\nR\014\303\252{\n@ AWQL\020\230*\023\270\315D\234\2700ci[\222R\262\323\177\346T\004\267\312\t|\2043x\377\272J\221LTe\006\0311\220\252\211\265\360\266J \310h\230\220\034M#\233\200699\3549\370E/R\275d(3N\333\217\317\202\301D3\240A\266\332\257\242\304\3359&Yi\030\231Et\005\251\256\004\000\214\310aL\005\010\005\340&\226\322\360\025=\023\\\000U\306\006\007}\274\305P;Q\320@\021\341\031\303*\263*\255\367\226:2\007\240\250/\337P\215h\234u4V\345\255\371h\212\250\252\360T\0244\301%QiKH\267.\t$U)\320L\251[\274\\\010\217XUy\010Y\253\212\271U\237f$e\252\350RDP\271iQ\247\206\320%\347\350\346]\025]\230D\305\026w8\232\346Ve\365q\031\201)\025\212""\333irT\023kls\025\207\356\262\030.\206$&\260\256\211\275\305j<\232\020\313\254s\221\033eH\363X\264^\261\351\005\005xY)\333\341\013Ft\246\005\224\316W\255\342>\355\331\330\344\243\027*\350\217\205\201\022/\233\010\250\214D\202\027*\261\326^1\300\205,B\002B\252Vrf!\032\243\3264\200\245\021BqPb\245\021$EVHF\261\312\315T\321Zc\367\3703\222k\242\025*=\202\212\300\025j\374\206\177\362E\227\357\016(.d*\230\340\324\344\242\016i\022kh\341P\236+\016D\270\n<\324\2475d\254\270\306H\010\253!;h\n\300|w\321o6%\241\263$\252P*Rc\323\002jiF\265\320#\223M\002\220\r\331\\Y\306\265\362\204R\330\323\204%A$L\204\032\324KJW4\321\030\301f\313qIh\310\226J\321\243*\334T\331\252\007\322IaK^\nbMS)\014\350\037M]\025\335\234\370\246\224dQ\304\201\020|\024<DDY\033\256\275\351K\312\250\334\231n7\210\205,\013\213f\020lN]c\314\374\375\246\216\207\217N\276(\376\347\204\354\257\211`d1\037PQ\260\232\312G\013M\227\210K\227\360\355^;\203\342\345\365\266\351\004g\242\326j\204C\370\t|uV\376\033\365L\033\257d\331\027\375\177\215\303\277\230x\324\222u\356\256S'\206CP\242n\3467\261\220\310\231m\307\314\216\022\344?\023Og\260<E\342\254d\347;ZK\r\223J\004R\361\250O5\230\301=\306\366\234?\262\361X\305\212\216\3732\263\237\207]k8z\204u\r\217\265\370\310\317i\267v\305\256E\330\2354\276\366\326\3533\355/1\311\017G^O\303\344\231$\236\006s\220\240W\222\377x=\242\254\246\177\305\334\221N\024$\030MV\321\300";
+    PyObject *data = __Pyx_DecompressString(cstring, 1223, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
     #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1046 bytes) */
-const char* const cstring = "x\332\215T\315O\033G\024\347#MM \rTMQ\333\010\231T*M\302\247R%UJ\233Z\220\246\241\220\340\000\262\004\204a\230\035\333\023\326;\353\231YcKH\345\350\343\036\367\270\307=\372\350\243\217>\316\321\307\374\t\374\t}\2636\0376\216T\313\236y\363\276\337\373\275\347\227\026\223\370\310\246\3241g\2160\331\246,\207'-\232\305\236\255\222\010\tjy\204\"\224\264<\232T<\351pgN\tVb\330\006)a\016S\0109^\301\255\314#\302\005\235/\200\035\303B\340J2\213\031\2703V\254\340r\241\256\253y\005\254\36274\270\247\020\330&\013\236T\311#\232\\\231#\334Q,\347qOJA\026\376\246\022\263ufa\261\n9P\221\021\330u\251\230w+\345e\ti99\311=A\350\037\236\312\316\375\272\202V\336\275\335~\363z\347\335\316\326\225%\262bSt\322\266\335\254\304\242\266\277\256\307\374e\365\244\242\362\334A\250W,\251\222\n\253\317)\020\233K\332\315\312Q\265\016\006R\375%p\341\246\354--\253M\202\335\376\322-\210\345\311n\266\001\240\233\003\031\211\036\226\347Z\020t\313\301\256\314s\265\312\004%\212\213\212\311\267\014\277UF\0242\241\337\003\354\200\234\2548\204\361y\300\t\360`\016\225\304\206\0231\007)\201\t=\302\3448.\r\024\214'\006\225\203\177\334\363D\004\332\353\020\336\231%T\240R\342\034E\006\347\254\215s\022\241\254\347\020\204\272{\322\333\205\313\272c\305v\273Q\236K\030\024\313\022\340\363:mb\306#\311$\272L\237)Z\220v\014}G\255\353al\332\014Uq\251\315s\310b\"f\002)\2510\263\302\272\037=RSQ\317\263\243\221\203\211\214\335\241\002\206\366\301\247\300-\317\246\206r\24088\335x+:\203\357\272P6r\261\000W\250\263\216}X\306\373uv\026\266\010h\225\357\313\214\265\271\353*\022\247\346*\341V\320\021W\212C`H\214\300)\0358\024w\021\202UB\235.\027=l\267\263\274\372\037\270\261\023\227\014Z6\244\004\250\245$\330\221q0I\355l\274'\235r\201\272\230\207\253\355A}6I\302\260^\000!;\203k\336\361t#d\306\005\241\317\314u\t\333\036\225g\251\363\251\201\221\261\352/\325\323\340i\200[c\343\376W\001\217\322\255\304\303\360I\224\251\245j\373\215\007\315\214\336>\320\007\207\3720\247sy\235g\255\304LxZ{^\237\256/\265\022?Gwk\231z\252\236\276\"\367""\233S:\003\026\240\373Q\177,\352\242\320B\202\221\236y\241_\2545gtzO\357\355\267\022\217\243\205\372dc\260\361@o|\320\037,m9\332q\265{\242O\312\272\\i%f\243T+\261\250\027_52\315T\023\002\334\253*\377\267\200\206K\341\272^\\\321+;z\007k|\254\217\377=\037\030\370shc\010\256\215\241Cs\035\016y\346\362\206\326\206\341Z\033&\346\"\303\326\360\031\370\034\215\013~\036N\233\202G\203g\341\204!n\371\251v\003\260\321yV\303mE\351\377\024\014\006\240\361\265\3778H\005\220\306\367\301\243\360i\010\342Y=\273\334.\375^\265\344\357\006\245p7*\325v\353\245F\372\177\273\210Vk\243\365\227\315\351\346R_/\347w\006F\246\202\355\360\207h\255\206\317\023\003#w\253\251\352\226\177\333\007\333q\377\013?\355\037\005_\006\305p$\232\370\224\030\003\331\266\377\255_l%&\374\373>\366E0\031\016\206\337E\323m\331^p\033@\356/;\210\333\220\370\306\177\025L\004\017\203\327\320\3447Q\372S'\010\006\237\343\367/\210\211\313\257)\263\215J6L\231\307\217\341rtR\303\265\323\306\357z3\2433\200\017\321\004\306\000P\262[\020\351\037=\271\020\025k\203g\203\255[w\252O\374\364\177\355g\374y";
+const char* const cstring = "x\332\225T\315O\033G\024\347#ML -TMQ\333\010\231D*iR\276\224*\251\222\264\251\005i\032\n\t. K@\030\206\331\261=a\275\263\236\2315\266\204T\216>\356q\217{\334\343\036}\364\321\3079\372\230?\201?\241o\326\346\303\206\034j\3313o\336\367{\277\367\374\312b\022\037\330\224:\346,\020&;\224\345\360\264E\363\330\263U\032!A-\217P\204\322\226G\323\212\247\035\356\314*\301*\014\333 %\314a\n!\307+\271\2659D\270\240s%\260cX\010\\K\3471\003w\306\212\225\\.\324e5\257\204U\361\212\006\367\024\002\333t\311\223*}@\323K\263\204;\212\025<\356I)\310\374_Tb\266\312,,\226!\007*r\002\273.\025sn\255\372RBZNArO\020\372\273\247\362\263\277.\241\245\367\3576\337\276\331z\277\265qa\211\254\304\024\035ul\327k\211\250\343\257\3471w^=\251\251\"w\020\352\027K\252\244\302\352s\n\304\346\222\366\262\nT\255\202\201T\177\n\\\272*{G\253j\235`\367z\351\006\304\362d/\333\000\320\313\201\214D\037\313s-\010\272\341`W\026\271Zf\202\022\305E\315\344[\205\3372#\n\231\320\377\000\354\200\234\2549\204\3619\300\t\360`\016\225\304\206\0231\007)\201\t=\300\3440)\r\024\214'\006\225\203\177\334\367D\004\332\353\020\336\235%T\242R\342\002E\006\347\274\215\013\022\241\274\347\020\204z{\322\337\205\363\272\023\305N\273Q\221K\030\024\313\022\340\3632mb&#\311$:O\237)Z\222v\002}W\255\347al:\014Us\251\315\013\310b\"a\002)\2510\263\302z\037}RSQ\337\263\253Q\200\211L\334\241\022\206\366\301\247\304-\317\246\206r\24088\335d+\272\203\357\272P6r\261\000W\250\273\216\327\260\214\367\313\354<l\021\320\252x-3\321\346\256\253H\222\232\253\204[C\007\\)\016\201!1\002\247t\340P\334E\010V\tu\273\\\366\260\335\311\362\342\177\340\312N\2343h\325\220\022\240\226\222`G&\301$\265\363\311\236t\313\005\352l\036.\266\007]\263I\022\206\365\014\010\331\035\\\363N\246\033!3.\010}f\256+\330\366\250<\311\234N\r\214\214\325\177\251\037\007O\002\334\036\033\367\277\014x\224m\247\356\207\217\243\\\234\211w\233\367Z9\275\271\247\367\366\365~A\027\212\272\310\332\251\231\3608~\326\230n,\266S\017\243;q\256\221id/\310\335\326\224\316\201\005\350~\324\037""\313\272,\264\220`\244g\236\353\347+\255\031\235\335\321;\273\355\324\243h\2761\331\034l\336\323k\037\364\007K[\216v\\\355\036\351\243\252\256\326\332\251\237\243L;\265\240\027^7s\255L\013\002|UW\376\213\200\206\213\341\252^X\322K[z\013k|\250\017\377=\035\030\370chm\010\256\265\241}s\355\017y\346\362\206V\206\341Z\031&\346\"\303\326\360\t\370\034M\n~\026N\233\202G\203\247\341\204!n\370\231N\003\260\321y\032\343\216\242\364\177\014\006\003\320\370\332\177\024d\002H\343\373\340\247\360I\210M\202\313\361h\343Uk\272\265h\222\253\370\333A%\334\216*\361v\243\322\314\376//\372\305\352Y\215W\334\234\336\036\030\231\n6\303\037\242\225\030\237\246\006F\356\3243\365\r\377\246\017\306\343\376\027~\326?\010n\005\345p$\232\370\224\032\003\331\246\377\255_n\247&\374\273>\366E0\031\016\206\337E\323\035\331Np\023\200\276^\266\227\264\"\365\215\377:\230\010\356\007o\240\321o\243\354\247n\020\014>\307\357\236\021\023\347_Sg\007\231|\2301\217\007\341\313\350(\306\361q\3637\275\236\3239\300\210h\002\243\000H\331m\210\364\267\236\234\217\312\361\340\311`\373\306\355\372c?\373\037.c\376_";
     PyObject *data = __Pyx_DecompressString(cstring, 1046, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (1892 bytes) */
-const char* const bytes = "?disableenablegcisenabledno default __reduce__ due to non-trivial __cinit__numpy._core.multiarray failed to importnumpy._core.umath failed to importout_arr must be C-contiguoussrc/HesaiLidarDriverWrapper.pyx<stringsource>utf-8C_CONTIGUOUSHesaiLidar_driver_wrapperPyHesaiDriverPyHesaiDriver.__reduce_cython__PyHesaiDriver.__setstate_cython__PyHesaiDriver.closePyHesaiDriver.getLatestFramePyHesaiDriver.getNextPcapFramePyHesaiDriver.getStatusPyHesaiDriver.initPyHesaiDriver.startPyHesaiDriver.updateSnapshotDirectory__Pyx_PyDict_NextRefarrasyncio.coroutinescline_in_tracebackclosecorrection_datacorrection_data_cppencodefault_message_portflags__func__getLatestFramegetNextPcapFramegetStatus__getstate__host_addresshost_address_cppinit_is_coroutineitemslidar_addresslidar_address_cpplidar_typelog_dir_cpplog_server_iplog_server_ip_cpplog_server_portlog_server_port_cpplogging_dir__main____module____name__npnumpyout_arrppcap_parser_enabledpcap_parser_enabled_cpppcap_parser_file_pathpcap_parser_file_path_cpppopptc_portptrpy_bottompy_macpy_snpy_top__pyx_state__qualname____reduce____reduce_cython____reduce_ex__resultsscans_portself__set_name__setdefault__setstate____setstate_cython__snap_dir_cppsnapshot_dirstart__test__updateSnapshotDirectoryvalues\200A\360\036\000\t\014\2104\210|\2303\230a\330\014\020\220\016\230o\250Q\330\010\"\240+\250W\260A\260\\\300\034\310W\320T^\320^`\320`g\320gh\320hi\330\010'\240|\2607\270!\2701\330\010(\250\r\260W\270A\270Q\330\010(\250\r\260W\270A\270\\\310\036\320W^\320^h\320hj\320jq\320qr\320rs\330\010'\320':\320:J\310'\320Q[\320[\\\330\010*\250/\270\027\300\001\300\034\320M]\320]d\320dn\320np\320pw\320wx\320xy\330\010,\250A\330\0100\3200E\300W\310A\310Q\330\010\017\210t\220;\230e\2401\240L\3200C\320CU\320Ua\320ak\320k\177\360\000\000@\002M\002\360\000\000M\002`\002\360\000\000`\002u\002\360\000\000u\002J\003\360\000\000J\003c\003\360\000\000c\003d\003\200A\330\010\013\2104\210|\2307\240!\330\014\020\220\013\2306\240\021\330\014\020\220\004\220A\330\014""\020\220\016\230a\200A\330\0106\260a\330\010\013\2104\210s\220&\230\001\230\021\330\014\022\220*\230A\230Q\330\010\032\230)\2403\240a\330\010,\320,<\270A\270Q\330\010\017\210v\220Z\230v\240Z\250v\260Z\270v\300Q\200A\330\0106\260a\330\010\013\2104\210s\220&\230\001\230\021\330\014\022\220*\230A\230Q\330\010\032\230)\2403\240a\330\010,\250D\260\013\270?\310!\3101\330\010\017\210v\220Z\230v\240Z\250v\260Z\270v\300Q\200A\360\n\000\t\036\230T\240\033\250J\260a\360\010\000\t\r\210A\210S\220\006\220a\330\010\020\220\005\220Q\220b\230\007\230q\240\t\250\021\340\010\014\210A\210T\220\026\220q\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210[\230\006\230a\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210^\2306\240\021\330\010\024\220E\230\021\230\"\230G\2401\240I\250Q\340\010\020\220\005\220Q\220a\220q\330\020\025\220Q\220a\220q\330\020\021\330\020\021\330\020\021\330\020\021\200A\330\010\017\210t\220;\230f\240A\200A\330\010#\240<\250w\260a\260|\300=\320PW\320Wa\320ac\320cj\320jk\320kl\330\010\014\210K\320\027/\250q\260\001\200\001\330\004\n\210+\220Q";
+    #else /* compression: none (1896 bytes) */
+const char* const bytes = "?disableenablegcisenabledno default __reduce__ due to non-trivial __cinit__numpy._core.multiarray failed to importnumpy._core.umath failed to importout_arr must be C-contiguoussrc/HesaiLidarDriverWrapper.pyx<stringsource>utf-8C_CONTIGUOUSHesaiLidar_driver_wrapperPyHesaiDriverPyHesaiDriver.__reduce_cython__PyHesaiDriver.__setstate_cython__PyHesaiDriver.closePyHesaiDriver.getLatestFramePyHesaiDriver.getNextPcapFramePyHesaiDriver.getStatusPyHesaiDriver.initPyHesaiDriver.startPyHesaiDriver.updateSnapshotDirectory__Pyx_PyDict_NextRefarrasyncio.coroutinescline_in_tracebackclosecorrection_datacorrection_data_cppencodefault_message_portflags__func__getLatestFramegetNextPcapFramegetStatus__getstate__host_addresshost_address_cppinit_is_coroutineitemslidar_addresslidar_address_cpplidar_typelog_dir_cpplog_server_iplog_server_ip_cpplog_server_portlog_server_port_cpplogging_dir__main____module____name__npnumpyout_arrppcap_parser_enabledpcap_parser_enabled_cpppcap_parser_file_pathpcap_parser_file_path_cpppopptc_portptrpy_bottompy_macpy_snpy_top__pyx_state__qualname____reduce____reduce_cython____reduce_ex__resultsscans_portself__set_name__setdefault__setstate____setstate_cython__snap_dir_cppsnapshot_dirstart__test__updateSnapshotDirectoryvalues\200A\360\036\000\t\014\2104\210|\2303\230a\330\014\020\220\016\230o\250Q\330\010\"\240+\250W\260A\260\\\300\034\310W\320T^\320^`\320`g\320gh\320hi\330\010'\240|\2607\270!\2701\330\010(\250\r\260W\270A\270Q\330\010(\250\r\260W\270A\270\\\310\036\320W^\320^h\320hj\320jq\320qr\320rs\330\010'\320':\320:J\310'\320Q[\320[\\\330\010*\250/\270\027\300\001\300\034\320M]\320]d\320dn\320np\320pw\320wx\320xy\330\010,\250A\330\0100\3200E\300W\310A\310Q\330\010\017\210t\220;\230e\2401\240L\3200C\320CU\320Ua\320ak\320k\177\360\000\000@\002M\002\360\000\000M\002`\002\360\000\000`\002u\002\360\000\000u\002J\003\360\000\000J\003c\003\360\000\000c\003d\003\200A\330\010\013\2104\210|\2307\240!\330\014\020\220\013\2306\240\021\330\014\020\220\004\220A\330\014""\020\220\016\230a\200A\330\0106\260a\330\010\013\2104\210s\220&\230\001\230\021\330\014\022\220*\230A\230Q\330\010\032\230)\2403\240a\330\010,\250D\260\013\270?\310!\3101\330\010\017\210v\220Z\230v\240Z\250v\260Z\270v\300Q\200A\330\0106\260a\330\010\013\2104\210s\220&\230\001\230\021\330\014\022\220*\230A\230Q\330\010\032\230)\2403\240a\330\010,\250D\260\013\320;L\310A\310Q\330\010\017\210v\220Z\230v\240Z\250v\260Z\270v\300Q\200A\360\n\000\t\036\230T\240\033\250J\260a\360\010\000\t\r\210A\210S\220\006\220a\330\010\020\220\005\220Q\220b\230\007\230q\240\t\250\021\340\010\014\210A\210T\220\026\220q\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210[\230\006\230a\330\010\021\220\025\220a\220r\230\027\240\001\240\031\250!\340\010\014\210A\210^\2306\240\021\330\010\024\220E\230\021\230\"\230G\2401\240I\250Q\340\010\020\220\005\220Q\220a\220q\330\020\025\220Q\220a\220q\330\020\021\330\020\021\330\020\021\330\020\021\200A\330\010\017\210t\220;\230f\240A\200A\330\010#\240<\250w\260a\260|\300=\320PW\320Wa\320ac\320cj\320jk\320kl\330\010\014\210K\320\027/\250q\260\001\200\001\330\004\n\210+\220Q";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
@@ -8092,37 +8089,37 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {13, 0, 0, 21, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 68};
+    const __Pyx_PyCode_New_function_description descr = {13, 0, 0, 21, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 63};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_lidar_type, __pyx_mstate->__pyx_n_u_lidar_address, __pyx_mstate->__pyx_n_u_host_address, __pyx_mstate->__pyx_n_u_scans_port, __pyx_mstate->__pyx_n_u_ptc_port, __pyx_mstate->__pyx_n_u_fault_message_port, __pyx_mstate->__pyx_n_u_logging_dir, __pyx_mstate->__pyx_n_u_log_server_ip, __pyx_mstate->__pyx_n_u_log_server_port, __pyx_mstate->__pyx_n_u_correction_data, __pyx_mstate->__pyx_n_u_pcap_parser_enabled, __pyx_mstate->__pyx_n_u_pcap_parser_file_path, __pyx_mstate->__pyx_n_u_log_dir_cpp, __pyx_mstate->__pyx_n_u_host_address_cpp, __pyx_mstate->__pyx_n_u_lidar_address_cpp, __pyx_mstate->__pyx_n_u_log_server_ip_cpp, __pyx_mstate->__pyx_n_u_log_server_port_cpp, __pyx_mstate->__pyx_n_u_correction_data_cpp, __pyx_mstate->__pyx_n_u_pcap_parser_enabled_cpp, __pyx_mstate->__pyx_n_u_pcap_parser_file_path_cpp};
     __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_init, __pyx_mstate->__pyx_kp_b_iso88591_A_4_3a_oQ_WA_WT_gghhi_7_1_WAQ_WA, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 95};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 90};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
     __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_start, __pyx_mstate->__pyx_kp_b_iso88591_A_t_fA, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 98};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 93};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_out_arr, __pyx_mstate->__pyx_n_u_arr, __pyx_mstate->__pyx_n_u_ptr, __pyx_mstate->__pyx_n_u_result};
     __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_getLatestFrame, __pyx_mstate->__pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_1_vZvZvZvQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 106};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 101};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_out_arr, __pyx_mstate->__pyx_n_u_arr, __pyx_mstate->__pyx_n_u_ptr, __pyx_mstate->__pyx_n_u_result};
-    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_getNextPcapFrame, __pyx_mstate->__pyx_kp_b_iso88591_A_6a_4s_AQ_3a_AQ_vZvZvZvQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_getNextPcapFrame, __pyx_mstate->__pyx_kp_b_iso88591_A_6a_4s_AQ_3a_D_LAQ_vZvZvZvQ, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 114};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 109};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_snapshot_dir, __pyx_mstate->__pyx_n_u_snap_dir_cpp};
     __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_updateSnapshotDirectory, __pyx_mstate->__pyx_kp_b_iso88591_A_wa_PWWaaccjjkkl_K_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 7, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 118};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 7, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 113};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_s, __pyx_mstate->__pyx_n_u_p, __pyx_mstate->__pyx_n_u_py_sn, __pyx_mstate->__pyx_n_u_py_mac, __pyx_mstate->__pyx_n_u_py_top, __pyx_mstate->__pyx_n_u_py_bottom};
     __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_getStatus, __pyx_mstate->__pyx_kp_b_iso88591_A_T_Ja_AS_a_Qb_q_AT_q_ar_A_a_ar, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 146};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 141};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self};
     __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_HesaiLidarDriverWrapper_pyx, __pyx_mstate->__pyx_n_u_close, __pyx_mstate->__pyx_kp_b_iso88591_A_4_7_6_A_a, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
   }
