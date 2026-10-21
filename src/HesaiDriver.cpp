@@ -6,15 +6,8 @@
 #include "core.hpp"
 
 
-volatile int HesaiDriver::sigint_received_ = 0;
-
 HesaiDriver::HesaiDriver(){}
 HesaiDriver::~HesaiDriver() { close(); }
-
-void HesaiDriver::_sigintHandler(int)
-{
-    sigint_received_ = 1;
-}
 
 bool HesaiDriver::init(
     int lidar_type, 
@@ -28,7 +21,8 @@ bool HesaiDriver::init(
     int log_server_port,
     const std::string& correctionData,
     bool pcap_parser_enabled,
-    const std::string& pcap_parser_file_path
+    const std::string& pcap_parser_file_path,
+    bool replay_mode
 ) {
     // Ensure no stale resources from a prior session remain bound.
     close();
@@ -66,9 +60,7 @@ bool HesaiDriver::init(
 
     // Process exit flag
     exit_process_cmd_ = false;
-    prev_sigint_handler_ = std::signal(SIGINT, &HesaiDriver::_sigintHandler);
-    signal_handler_installed_ = true;
-    
+
     // Save parameters
     lidar_type_ = lidar_type;
     logging_dir_ = logging_dir;
@@ -89,7 +81,7 @@ bool HesaiDriver::init(
     param.input_param.multicast_ip_address = "";
 
     param.input_param.ptc_mode = PtcMode::tcp;
-    param.input_param.use_ptc_connected = true;  // true: use PTC connected, false: recv correction from local file
+    param.input_param.use_ptc_connected = !replay_mode;  // if replay mode, do not use PTC connection, else use it
     param.input_param.correction_file_path = correctionData;
     param.input_param.firetimes_path = "Your firetime file path";
 
@@ -205,18 +197,6 @@ bool HesaiDriver::start() {
     //     return false;
     // }
 
-    // Dedicated SIGINT monitoring thread
-    // sig_monitor_thread_ = std::thread([this]() {
-    //     while (!exit_process_cmd_) {
-    //         if (sigint_received_) {
-    //             exit_process_cmd_.store(true);
-    //             break;
-    //         }
-    //         std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    //     }
-    // });
-    // std::this_thread::sleep_for(std::chrono::seconds(1));
-
     // Try to get latest frame, to ensure lidar is properly connected
     // double* dummy_buf = new double[900*96*4]; // Adjust size as needed
     // PointCloudFetchResult result = returnLatestCloud(dummy_buf);
@@ -323,8 +303,7 @@ void HesaiDriver::close() {
 
     if (pcap_thread_.joinable()) pcap_thread_.join();
     // if (periodic_status_thread_.joinable()) periodic_status_thread_.join();
-    // if (sig_monitor_thread_.joinable()) sig_monitor_thread_.join();
-    
+
     if (redirect_logs_to_udp_ && old_cout_buf_ != nullptr) {
         std::cout.rdbuf(old_cout_buf_);
         old_cout_buf_ = nullptr;
@@ -332,12 +311,6 @@ void HesaiDriver::close() {
     tee_buf_.reset();
     udp_buf_.reset();
     redirect_logs_to_udp_ = false;
-
-    if (signal_handler_installed_) {
-        std::signal(SIGINT, prev_sigint_handler_);
-        signal_handler_installed_ = false;
-        prev_sigint_handler_ = nullptr;
-    }
 
     std::cout << "C++: KeyboardInterrupt: Stopping processes and drivers..." << std::endl;
 }

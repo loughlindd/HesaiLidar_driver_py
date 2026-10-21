@@ -39,7 +39,8 @@ cdef extern from "HesaiDriver.hpp":
                   int log_server_port,
                   string correction_data,
                   bint pcap_parser_enabled,
-                  string pcap_parser_file_path
+                  string pcap_parser_file_path,
+                  bint replay_mode
                   ) except +
         bint start()
         LidarStatus getStatus() const
@@ -73,7 +74,8 @@ cdef class PyHesaiDriver:
         int log_server_port,
         correction_data,
         pcap_parser_enabled,
-        pcap_parser_file_path
+        pcap_parser_file_path,
+        replay_mode
     ):
         if self.cpp_driver is NULL:
             self.cpp_driver = new HesaiDriver()
@@ -85,7 +87,21 @@ cdef class PyHesaiDriver:
         cdef string correction_data_cpp = correction_data.encode('utf-8') if correction_data is not None else "".encode("utf-8")
         cdef bint pcap_parser_enabled_cpp = pcap_parser_enabled
         cdef string pcap_parser_file_path_cpp = pcap_parser_file_path.encode('utf-8')
-        return self.cpp_driver.init(lidar_type, lidar_address_cpp, host_address_cpp, scans_port, ptc_port, fault_message_port, log_dir_cpp, log_server_ip_cpp, log_server_port_cpp, correction_data_cpp, pcap_parser_enabled_cpp, pcap_parser_file_path_cpp)
+        cdef bint replay_mode_cpp = replay_mode
+        return self.cpp_driver.init(
+            lidar_type, 
+            lidar_address_cpp, 
+            host_address_cpp, 
+            scans_port, ptc_port, 
+            fault_message_port, 
+            log_dir_cpp, 
+            log_server_ip_cpp, 
+            log_server_port_cpp, 
+            correction_data_cpp, 
+            pcap_parser_enabled_cpp, 
+            pcap_parser_file_path_cpp, 
+            replay_mode_cpp
+        )
 
     def start(self):
         return self.cpp_driver.start()

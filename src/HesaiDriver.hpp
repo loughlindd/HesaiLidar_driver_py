@@ -7,7 +7,6 @@
 #include <thread>
 #include <atomic>
 #include <memory>
-#include <csignal>
 #include <windows.h>
 #include <iostream>
 #include <vector>
@@ -68,7 +67,8 @@ public:
       int log_server_port,
       const std::string& correctionData,
       bool pcap_parser_enabled,
-      const std::string& pcap_parser_file_path
+      const std::string& pcap_parser_file_path,
+      bool replay_mode
     );
     bool start();
     PointCloudFetchResult getLatestFrame(float* out_buf);
@@ -125,14 +125,7 @@ private:
     // std::unique_ptr<LidarDriver<PointCloudT<PointXYZI>>> rsdriver_;
     std::thread pcap_thread_;
     std::thread periodic_status_thread_;
-    std::thread sig_monitor_thread_;
 
-    // Sigint handling
     std::atomic<bool> exit_process_cmd_;
-    using SignalHandler = void(*)(int);
-    SignalHandler prev_sigint_handler_ = nullptr;
-    bool signal_handler_installed_ = false;
-    static volatile std::sig_atomic_t sigint_received_;
-    static void HesaiDriver::_sigintHandler(int);
 
 };
