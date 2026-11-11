@@ -2,7 +2,8 @@ from setuptools import setup, Extension
 from Cython.Build import cythonize
 import os
 import numpy
-import json 
+import json
+import re
 from pathlib import Path
 
 # Print python version
@@ -17,7 +18,19 @@ with open(os.path.join(curr_path, ".env")) as f:
         
 SDK_ROOT = Path(os.environ["RS_DRIVER_REPO_PATH"])
 
+# SDK >= 2.0.12 generates sdk_version.hpp with CMake: do the same substitution here
+GENERATED_DIR = Path(curr_path) / "build" / "generated"
+GENERATED_DIR.mkdir(parents=True, exist_ok=True)
+cmake_text = (SDK_ROOT / "CMakeLists.txt").read_text(encoding="utf-8")
+version = {k: re.search(rf"set\({k} (\d+)\)", cmake_text).group(1) for k in ["HESAI_SDK_VERSION_MAJOR", "HESAI_SDK_VERSION_MINOR", "HESAI_SDK_VERSION_PATCH"]}
+version["HESAI_SDK_VERSION"] = ".".join(version.values())
+version_header = (SDK_ROOT / "driver" / "sdk_version.hpp.in").read_text(encoding="utf-8")
+for k, v in version.items():
+    version_header = version_header.replace(f"@{k}@", v)
+(GENERATED_DIR / "sdk_version.hpp").write_text(version_header)
+
 include_dirs_hesai = [
+    str(GENERATED_DIR),
     str(SDK_ROOT),
     str(SDK_ROOT / "driver"),
     str(SDK_ROOT / "libhesai"),
@@ -79,7 +92,7 @@ ext_modules = [
         ] + include_dirs_hesai,
         library_dirs=[os.path.join(os.environ["NPCAP_SDK_PATH"], "Lib", "x64")],
         libraries=["wpcap", "Packet", "Ws2_32"],
-        extra_compile_args=[],
+        extra_compile_args=["/std:c++17"],
     )
 ]
 
