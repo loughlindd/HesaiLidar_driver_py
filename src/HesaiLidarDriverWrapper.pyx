@@ -49,6 +49,8 @@ cdef extern from "HesaiDriver.hpp":
         PointCloudFetchResult getNextPcapFrame(float* out_buf) except +
         void updateSnapshotDirectory(string snapshot_dir) except +
 
+MAX_POINTS = 128 * 900  # single return, must match HesaiDriver::kMaxPoints
+
 cdef class PyHesaiDriver:
     cdef HesaiDriver* cpp_driver
 
@@ -110,6 +112,8 @@ cdef class PyHesaiDriver:
         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
         if not arr.flags['C_CONTIGUOUS']:
             raise ValueError("out_arr must be C-contiguous")
+        if arr.shape[0] != MAX_POINTS or arr.shape[1] != 4:
+            raise ValueError(f"out_arr must have shape ({MAX_POINTS}, 4), got {arr.shape[0], arr.shape[1]}")
         cdef float* ptr = <float*> arr.data
         cdef PointCloudFetchResult result = self.cpp_driver.getLatestFrame(ptr)
         return result.success, result.dt_wait, result.dt_proc, result.timestamp    
@@ -118,6 +122,8 @@ cdef class PyHesaiDriver:
         cdef cnp.ndarray[cnp.float32_t, ndim=2] arr = out_arr
         if not arr.flags['C_CONTIGUOUS']:
             raise ValueError("out_arr must be C-contiguous")
+        if arr.shape[0] != MAX_POINTS or arr.shape[1] != 4:
+            raise ValueError(f"out_arr must have shape ({MAX_POINTS}, 4), got {arr.shape[0], arr.shape[1]}")
         cdef float* ptr = <float*> arr.data
         cdef PointCloudFetchResult result = self.cpp_driver.getNextPcapFrame(ptr)
         return result.success, result.dt_wait, result.dt_proc, result.timestamp

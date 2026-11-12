@@ -7,6 +7,7 @@
 #include <thread>
 #include <atomic>
 #include <memory>
+#include <mutex>
 #include <windows.h>
 #include <iostream>
 #include <vector>
@@ -88,7 +89,10 @@ private:
     PointCloudFetchResult returnLatestCloud(float* out_buf);
     void resetPcapFrameBuffer();
 
-    float out_buf_cache_[230400 * 4] = {};   // 128 * 900 * 2 points * 4 floats
+    static constexpr size_t kMaxPoints = 128 * 900;  // single return
+    float frame_buf_[kMaxPoints * 4] = {};       // filled by lidarCallback, zeroed every frame
+    float out_buf_cache_[kMaxPoints * 4] = {};   // latest complete frame, read by Python
+    std::mutex out_buf_mutex_;
     uint64_t last_frame_time_ = 0;
     uint32_t last_frame_index_recv_ = 0;
     float dt_frame_ = 0.0f;

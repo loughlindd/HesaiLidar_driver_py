@@ -6,6 +6,9 @@
 #include <thread>
 #include <atomic>
 #include <csignal>
+#include <algorithm>
+#include <cstring>
+#include <mutex>
 
 // #define LIDAR_PARSER_TEST
 // #define SERIAL_PARSER_TEST
@@ -148,32 +151,28 @@ void HesaiDriver::lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame
   last_frame_time_ = nowtUTC();
   last_frame_index_recv_ = frame.frame_index;
 
-  StoredFrame stored_frame;
-  if (pcap_parser_mode_) {
-      stored_frame.points.resize(230400 * 4, 0.0f);
-      stored_frame.timestamp = static_cast<double>(frame.frame_end_timestamp);
-  }
+  // Points left from a previous, larger frame must not survive into this one
+  std::fill(std::begin(frame_buf_), std::end(frame_buf_), 0.0f);
 
-  // Copy point cloud data to output buffer
-  size_t num_points = frame.points_num;
+  size_t num_points = std::min<size_t>(frame.points_num, kMaxPoints);
   for (size_t i = 0; i < num_points; ++i) {
-      if (i >= 230400) break; // Prevent buffer overflow, adjust as needed
-
       const auto& pt = frame.points[i];
-      out_buf_cache_[i * 4 + 0] = pt.x;
-      out_buf_cache_[i * 4 + 1] = pt.y;
-      out_buf_cache_[i * 4 + 2] = pt.z;
-      out_buf_cache_[i * 4 + 3] = pt.intensity;
-        if (pcap_parser_mode_) {
-          stored_frame.points[i * 4 + 0] = pt.x;
-          stored_frame.points[i * 4 + 1] = pt.y;
-          stored_frame.points[i * 4 + 2] = pt.z;
-          stored_frame.points[i * 4 + 3] = pt.intensity;
-        }
+      frame_buf_[i * 4 + 0] = pt.x;
+      frame_buf_[i * 4 + 1] = pt.y;
+      frame_buf_[i * 4 + 2] = pt.z;
+      frame_buf_[i * 4 + 3] = pt.intensity;
   }
 
   if (pcap_parser_mode_) {
+    StoredFrame stored_frame;
+    stored_frame.points.assign(std::begin(frame_buf_), std::end(frame_buf_));
+    stored_frame.timestamp = static_cast<double>(frame.frame_end_timestamp);
     pcap_frames_.push_back(std::move(stored_frame));
+  }
+
+  {
+    std::lock_guard<std::mutex> lock(out_buf_mutex_);
+    std::memcpy(out_buf_cache_, frame_buf_, sizeof(out_buf_cache_));
   }
 
   auto t1 = std::chrono::system_clock::now();
@@ -181,6 +180,7 @@ void HesaiDriver::lidarCallback(const LidarDecodedFrame<LidarPointXYZICRT>&frame
 }
 
 PointCloudFetchResult HesaiDriver::returnLatestCloud(float* out_buf) {
+    std::lock_guard<std::mutex> lock(out_buf_mutex_);
     std::memcpy(out_buf, out_buf_cache_, sizeof(out_buf_cache_));
     float dt_tot = dt_frame_ + dt_logpcap;
     return {true, 0, dt_tot, static_cast<double>(last_frame_index_recv_)};

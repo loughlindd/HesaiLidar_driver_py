@@ -111,6 +111,7 @@ bool HesaiDriver::init(
     // param.decoder_param.play_rate_ = 1.0;
     // param.decoder_param.pcap_play_in_loop = true; // pcap playback
 
+    param.decoder_param.echo_mode_filter = 1; // dual return: keep first return only
     param.decoder_param.enable_packet_loss_tool = false;
     param.decoder_param.socket_buffer_size = 262144000;
     
